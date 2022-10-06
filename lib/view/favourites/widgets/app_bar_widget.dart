@@ -1,7 +1,7 @@
 import 'package:bromusic/controller/controller.dart';
 import 'package:bromusic/main.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
-import 'package:bromusic/view/screens/now_playing.dart';
+import 'package:bromusic/view/screens/now_playing/now_playing.dart';
 import 'package:bromusic/view/screens/routing.dart';
 import 'package:bromusic/view/search/search.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,8 +32,7 @@ class AppBarFavourite extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: () {
-                    Get.to(() => NowPlayingScreen(
-                        fullSongs: musicController.fullSongs, index: 0));
+                    Get.to(() => NowPlayingScreen());
                   },
                   icon: const Icon(
                     Icons.settings_input_antenna,
@@ -43,11 +42,9 @@ class AppBarFavourite extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 15.0),
                   child: IconButton(
                       onPressed: () {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (context) {
-                            return const SearchScreen();
-                          },
-                        ));
+                        Get.to(() => const SearchScreen(),
+                            transition: Transition.cupertino,
+                            duration: const Duration(milliseconds: 400));
                       },
                       icon: const Icon(
                         Icons.search,

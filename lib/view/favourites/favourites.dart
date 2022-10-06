@@ -20,7 +20,7 @@ import 'package:bromusic/view/favourites/widgets/list_tile_items.dart';
 import 'package:bromusic/view/favourites/widgets/moreWidget.dart';
 import 'package:bromusic/view/menu_item/pop_up.dart';
 import 'package:bromusic/view/screens/mini_player/mini_player.dart';
-import 'package:bromusic/view/screens/now_playing.dart';
+import 'package:bromusic/view/screens/now_playing/now_playing.dart';
 import 'package:bromusic/view/screens/player/player.dart';
 import 'package:bromusic/view/search/search.dart';
 
@@ -82,9 +82,7 @@ class FavouritesScreen extends StatelessWidget {
                                           Get.to(
                                               transition: Transition
                                                   .leftToRightWithFade,
-                                              () => NowPlayingScreen(
-                                                  fullSongs: favAudios,
-                                                  index: index));
+                                              () => NowPlayingScreen());
                                         },
                                         onTap: () async {
                                           for (var element in favSongs) {

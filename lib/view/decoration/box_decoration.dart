@@ -251,7 +251,7 @@ appBarSongs(var context, int selectindex) {
           child: IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                return const SplashScreen();
+                return SplashScreen();
               }));
             },
             icon: const Icon(

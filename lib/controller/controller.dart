@@ -1,11 +1,12 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/model/box_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class MusicController extends GetxController {
+class MusicController extends GetxController with GetTickerProviderStateMixin {
   List<Audio> fullSongs = <Audio>[].obs;
   List<AllAudios> mappedSongs = <AllAudios>[].obs;
   List<AllAudios> dataBaseSongs = <AllAudios>[].obs;
@@ -13,6 +14,17 @@ class MusicController extends GetxController {
   List<SongModel> allSongs = <SongModel>[].obs;
   List playlistName = <dynamic>[].obs;
   List<dynamic>? favSongs = <dynamic>[].obs;
+  double volume = 1;
+
+  bool nextDone = true;
+  bool prevDone = true;
+  List<SongModel> songs = [];
+  List<AllAudios>? dbSongs = [];
+  List<dynamic> favourites = [];
+  bool isPlay = true;
+  List? favouriteSongs = [];
+  ValueNotifier<bool> switched = ValueNotifier(false);
+  late AnimationController animationController;
   // final allSongs = RxList<SongModel>([]);
   //  final fetchedSongs = RxList<SongModel>([]);
   //  final dataBaseSongs = RxList<AllAudios>([]);
@@ -22,11 +34,12 @@ class MusicController extends GetxController {
   @override
   void onInit() {
     songFetch();
+    animationRotate();
     super.onInit();
   }
 
   final box = SongBox.getInstance();
-  final player = AssetsAudioPlayer.withId("0").obs;
+  final player = AssetsAudioPlayer.withId("0");
   final _audioQuery = OnAudioQuery();
   void requestPermission() {
     Permission.storage.request();
@@ -76,5 +89,41 @@ class MusicController extends GetxController {
 
     playlistName = box.keys.toList();
     update();
+  }
+
+  addFavourite(AllAudios currentAudio) {
+    favSongs?.add(currentAudio);
+    favSongs = box.get("favourites");
+    box.put("favourites", favSongs!);
+
+    update();
+  }
+
+  removeFavourite(AllAudios currentAudio) {
+    favSongs!.removeWhere(
+        (element) => element.id.toString() == currentAudio.id.toString());
+
+    box.put("favourites", favSongs!);
+    update();
+  }
+
+  popupAddFav(AllAudios cache, List<dynamic> favouriteSongs) async {
+    favouriteSongs.add(cache);
+
+    await box.put("favourites", favouriteSongs);
+    update();
+  }
+
+  popupRemoveFav(AllAudios cache, List<dynamic> favouriteSongs) async {
+    favouriteSongs
+        .removeWhere((element) => element.id.toString() == cache.id.toString());
+    await box.put("favourites", favouriteSongs);
+    update();
+  }
+
+  animationRotate() {
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 7));
+    animationController.repeat();
   }
 }

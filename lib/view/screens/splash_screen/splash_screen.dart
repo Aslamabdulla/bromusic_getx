@@ -2,32 +2,25 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/model/box_model.dart';
 
 import 'package:bromusic/view/common_widgets/colors.dart';
-import 'package:bromusic/view/screens/onboarding/welcome_screen.dart';
+import 'package:bromusic/view/screens/onboarding/welcome_screen/welcome_screen.dart';
 import 'package:bromusic/view/screens/routing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bromusic/main.dart';
+import 'package:get/get.dart';
 
-import 'package:on_audio_query/on_audio_query.dart';
+class SplashScreen extends StatelessWidget {
+  SplashScreen({super.key});
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   bool isFirsttime = true;
   String username = "GUEST";
   @override
-  void initState() {
-    firstTimeOpen(); // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timestamp) {
+        firstTimeOpen();
+      },
+    );
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -51,11 +44,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     await Future.delayed(Duration(seconds: 3));
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (ctx) =>
-            isFirsttime ? WelcomeScreen() : NavigationRouting(user: username),
-      ),
+    Get.offAll(
+      isFirsttime ? WelcomeScreen() : NavigationRouting(user: username),
     );
     // List<dynamic> libraryKeys = box.keys.toList();
   }

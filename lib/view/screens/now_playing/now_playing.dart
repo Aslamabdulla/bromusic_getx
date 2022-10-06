@@ -3,25 +3,24 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
+import 'package:bromusic/main.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/settings.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
-import 'package:flutter/cupertino.dart';
-
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:on_audio_query/on_audio_query.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:bromusic/view/screens/now_playing/widgets/icon_widget.dart';
 
 class NowPlayingScreen extends StatefulWidget {
-  final List<Audio> fullSongs;
-  final int index;
-  const NowPlayingScreen(
-      {Key? key, required this.fullSongs, required this.index})
-      : super(key: key);
+  const NowPlayingScreen({
+    Key? key,
+  }) : super(key: key);
 
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
@@ -50,9 +49,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
   bool isPlaying = true;
   bool shuffleSong = false;
   bool loopSong = false;
+  bool isPlaySong = true;
 
   @override
   void initState() {
+    musicController.animationRotate();
     super.initState();
 
     dataBaseSongs = box.get("music") as List<AllAudios>;
@@ -83,30 +84,14 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(CupertinoPageRoute(
-                  builder: (context) {
-                    return const SettingsScreen();
-                  },
-                ));
-              },
-              icon: const Icon(
-                Icons.settings,
-                size: 30,
-              ),
-              color: Colors.black,
-            ),
+            IconAppBar(
+                icon: Icons.settings,
+                fnctn: () => Get.to(() => SettingsScreen()))
           ],
-          leading: IconButton(
-              onPressed: (() {
-                Navigator.of(context).pop();
-              }),
-              icon: const Icon(
-                Icons.chevron_left,
-                size: 40,
-                color: Colors.black,
-              )),
+          leading: IconAppBar(
+            icon: Icons.chevron_left,
+            fnctn: () => Get.back(),
+          ),
           backgroundColor: switched.value
               ? const Color.fromRGBO(255, 110, 6, .9)
               : const Color.fromRGBO(255, 201, 0, .9),
@@ -119,8 +104,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
           width: width,
           child: player.builderCurrent(
               builder: (context, Playing? currentPlaying) {
-            final mySongs = widget.find(
-                widget.fullSongs, currentPlaying!.audio.assetAudioPath);
+            final mySongs = widget.find(musicController.fullSongs,
+                currentPlaying!.audio.assetAudioPath);
             final currentAudio = dataBaseSongs.firstWhere((element) =>
                 element.id.toString() == mySongs.metas.id.toString());
             favSongs = box.get("favourites");
@@ -156,37 +141,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
                           child: PlayerBuilder.isPlaying(
                         player: player,
                         builder: (context, glowAnimate) {
-                          return AvatarGlow(
-                            glowColor: Colors.grey.shade600,
-                            animate: glowAnimate,
-                            endRadius: width / 2,
-                            child: Container(
-                              clipBehavior: Clip.hardEdge,
-                              child: QueryArtworkWidget(
-                                nullArtworkWidget: Image.asset(
-                                  "assets/images/4.png",
-                                  fit: BoxFit.cover,
-                                ),
-                                type: ArtworkType.AUDIO,
-                                id: int.parse(mySongs.metas.id!),
-                                artworkFit: BoxFit.cover,
-                              ),
-                              height: height * .24,
-                              width: width / 2,
-                              // margin: EdgeInsets.all(80),
-                              decoration: const BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(0, 0, 0, .4),
-                                    blurRadius: 14,
-                                    spreadRadius: 3,
-                                    offset: Offset(0, 0.0),
-                                  ),
-                                ],
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                          );
+                          return AnimatedContainerWidget(
+                              glowAnimate: glowAnimate,
+                              width: width,
+                              height: height);
                         },
                       )),
                     ),
@@ -196,12 +154,14 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
                       child: Center(
                         child: SleekCircularSlider(
                           onChange: ((value) {
-                            player.setVolume(value);
+                            musicController.volume = value;
+                            player.setVolume(musicController.volume);
                           }),
                           min: 0,
                           max: 1,
-                          initialValue: 1,
+                          initialValue: musicController.volume,
                           appearance: CircularSliderAppearance(
+                              animationEnabled: false,
                               size: width / 1.5,
                               counterClockwise: true,
                               startAngle: 180,
@@ -272,10 +232,20 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
                                 PlayerBuilder.isPlaying(
                                     player: player,
                                     builder: (context, nowplaying) {
+                                      isPlaySong = nowplaying;
                                       return IconButton(
                                           iconSize: 100,
                                           onPressed: () async {
                                             await player.playOrPause();
+                                            if (nowplaying) {
+                                              musicController
+                                                  .animationController
+                                                  .stop();
+                                            } else {
+                                              musicController
+                                                  .animationController
+                                                  .repeat();
+                                            }
                                           },
                                           icon: Icon(
                                             nowplaying
@@ -500,5 +470,63 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
       await player.previous();
       prevDone = true;
     }
+  }
+}
+
+class AnimatedContainerWidget extends StatelessWidget {
+  const AnimatedContainerWidget({
+    Key? key,
+    required this.width,
+    required this.height,
+    required this.glowAnimate,
+  }) : super(key: key);
+
+  final double width;
+  final double height;
+  final bool glowAnimate;
+  @override
+  Widget build(BuildContext context) {
+    return AvatarGlow(
+      glowColor: Colors.grey.shade600,
+      animate: glowAnimate,
+      endRadius: width / 2,
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        height: height * .24,
+        width: width / 2,
+        // margin: EdgeInsets.all(80),
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, .4),
+              blurRadius: 14,
+              spreadRadius: 3,
+              offset: Offset(0, 0.0),
+            ),
+          ],
+          shape: BoxShape.circle,
+        ),
+        child: AnimatedBuilder(
+            animation: musicController.animationController,
+            builder: (BuildContext context, widget) {
+              return Transform.rotate(
+                angle: musicController.animationController.value * 6.3,
+                child: Image(
+                  image: AssetImage("assets/images/4.png"),
+                  fit: BoxFit.cover,
+                ),
+              );
+            }),
+        //  QueryArtworkWidget(
+        //   nullArtworkWidget: Image.asset(
+        //     "assets/images/4.png",
+        //     fit: BoxFit.cover,
+        //   ),
+        //   type: ArtworkType.AUDIO,
+        //   id: int.parse(mySongs.metas.id!),
+        //   artworkFit: BoxFit.cover,
+        // ),
+      ),
+    );
   }
 }

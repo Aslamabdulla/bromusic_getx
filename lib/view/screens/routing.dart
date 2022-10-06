@@ -1,13 +1,16 @@
+import 'package:bromusic/main.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/menu_item/playlist-dialog.dart';
-import 'package:bromusic/view/screens/all_songs.dart';
+import 'package:bromusic/view/screens/all_songs/all_songs.dart';
 import 'package:bromusic/view/screens/find_music/find_music.dart';
-import 'package:bromusic/view/screens/home_page.dart';
+import 'package:bromusic/view/screens/home_page/home_page.dart';
+import 'package:bromusic/view/screens/now_playing/now_playing.dart';
 import 'package:bromusic/view/search/search.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -40,7 +43,7 @@ class _NavigationRoutingState extends State<NavigationRouting> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const AllSongs(),
+      AllSongs(),
       Homepage(name: widget.user),
       // NowPlayingScreen(),
       const FindMusic(),
@@ -62,12 +65,10 @@ class _NavigationRoutingState extends State<NavigationRouting> {
           actions: [
             IconButton(
                 onPressed: () {
-                  setState(() {
-                    openDialog(context);
-                  });
+                  Get.to(() => NowPlayingScreen());
                 },
                 icon: const Icon(
-                  Icons.playlist_add,
+                  Icons.settings_input_antenna,
                   size: 25,
                 )),
             IconButton(

@@ -12,33 +12,20 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-class PopupMenu extends StatefulWidget {
+class PopupMenu extends StatelessWidget {
   final String id;
 
-  const PopupMenu({Key? key, required this.id}) : super(key: key);
-
-  @override
-  State<PopupMenu> createState() => _PopupMenuState();
-}
-
-class _PopupMenuState extends State<PopupMenu> {
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  PopupMenu({Key? key, required this.id}) : super(key: key);
 
   final box = SongBox.getInstance();
 
-  List<AllAudios> dataSongs = [];
-
-  List<Audio> listSongs = [];
   final MusicController musicController = Get.put(MusicController());
 
   @override
   Widget build(BuildContext context) {
     musicController.dataBaseSongs = box.get("music") as List<AllAudios>;
     List? favouriteSongs = box.get("favourites");
-    final cache = savedSongs(musicController.dataBaseSongs, widget.id);
+    final cache = savedSongs(musicController.dataBaseSongs, id);
     return PopupMenuButton(
       itemBuilder: (BuildContext ctx) => [
         favouriteSongs!
@@ -48,9 +35,7 @@ class _PopupMenuState extends State<PopupMenu> {
             ? PopupMenuItem(
                 value: "0",
                 onTap: () async {
-                  favouriteSongs.add(cache);
-
-                  await box.put("favourites", favouriteSongs);
+                  musicController.popupAddFav(cache, favouriteSongs);
                   snakBar(context, "added to favourites", cache.title!);
                 },
                 child: ListTile(
@@ -60,9 +45,7 @@ class _PopupMenuState extends State<PopupMenu> {
             : PopupMenuItem(
                 value: "0",
                 onTap: () async {
-                  favouriteSongs.removeWhere((element) =>
-                      element.id.toString() == cache.id.toString());
-                  await box.put("favourites", favouriteSongs);
+                  musicController.popupRemoveFav(cache, favouriteSongs);
                   snakBar(context, "removed from Favourites", cache.title!);
                 },
                 child: ListTile(

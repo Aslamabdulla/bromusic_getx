@@ -43,6 +43,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   lottie: ^1.4.2
+  marquee: ^2.2.3
   on_audio_query: ^2.6.1
   permission_handler: ^10.0.0
   share_plus: ^4.1.0
@@ -100,8 +101,8 @@ flutter:
           weight: 700
         - asset: assets/fonts/Poppins-Light.ttf
           weight: 300
-          style: italic  
-          
+          style: italic
+
     - family: Oswald
       fonts:
         - asset: assets/fonts/Oswald-Regular.ttf
@@ -110,6 +111,5 @@ flutter:
         - asset: assets/fonts/Oswald-Light.ttf
           weight: 300
           style: italic
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

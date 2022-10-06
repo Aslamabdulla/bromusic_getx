@@ -15,7 +15,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'view/screens/home_page.dart';
+import 'view/screens/home_page/home_page.dart';
 
 late SharedPreferences preference;
 
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: switched.value ? Colors.deepOrange : Colors.amber),
       home: firsttime
-          ? const SplashScreen()
+          ? SplashScreen()
           : const Homepage(
               name: "GUEST",
             ),

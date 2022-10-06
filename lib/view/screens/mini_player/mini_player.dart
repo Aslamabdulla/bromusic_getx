@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/view/screens/mini_player/widgets/add_favourites.dart';
+import 'package:bromusic/view/screens/mini_player/widgets/remove_favourite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -13,7 +15,7 @@ import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/screens/mini_player/widgets/mini_image.dart';
-import 'package:bromusic/view/screens/now_playing.dart';
+import 'package:bromusic/view/screens/now_playing/now_playing.dart';
 
 class MiniPlayer extends StatelessWidget {
   int index;
@@ -26,8 +28,6 @@ class MiniPlayer extends StatelessWidget {
     return source.firstWhere((element) => element.path == fromPath);
   }
 
-  bool nextDone = true;
-  bool prevDone = true;
   final box = SongBox.getInstance();
   @override
   Widget build(BuildContext context) {
@@ -46,11 +46,9 @@ class MiniPlayer extends StatelessWidget {
                     element.id.toString() == audioFile.metas.id.toString());
             return GestureDetector(
               onTap: () async {
-                await Navigator.of(context)
-                    .push(CupertinoPageRoute(builder: ((context) {
-                  return NowPlayingScreen(
-                      fullSongs: musicController.fullSongs, index: index);
-                })));
+                await Get.to(() => NowPlayingScreen(),
+                    transition: Transition.cupertino,
+                    duration: Duration(milliseconds: 500));
               },
               child: ValueListenableBuilder(
                 valueListenable: switched,
@@ -84,33 +82,25 @@ class MiniPlayer extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Container(
+                                SizedBox(
                                   width: width * .59,
                                   child: textHomeFunction(
                                       audioFile.metas.title!, 12),
                                 ),
                               ],
                             ),
-                            Container(
+                            SizedBox(
                               width: width * .55,
                               child:
                                   textHomeFunction(audioFile.metas.artist!, 11),
                             ),
-                            Container(
+                            SizedBox(
                               width: width / 1.55,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      prev();
-                                    },
-                                    icon: FaIcon(
-                                      FontAwesomeIcons.backwardStep,
-                                      size: width * .050,
-                                    ),
-                                  ),
+                                  IconSongController(width),
                                   PlayerBuilder.isPlaying(
                                       player: player,
                                       builder: (context, nowplaying) {
@@ -133,84 +123,19 @@ class MiniPlayer extends StatelessWidget {
                                       size: width * .050,
                                     ),
                                   ),
-                                  StatefulBuilder(
-                                    builder: (BuildContext context,
-                                        void Function(void Function())
-                                            setState) {
-                                      return musicController.favSongs!
-                                              .where((element) =>
-                                                  element.id.toString() ==
-                                                  currentAudio.id.toString())
-                                              .isEmpty
-                                          ? Container(
-                                              height: height * .05,
-                                              width: width * .090,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              //////////Want to avoid set
-                                              child: Center(
-                                                child: IconButton(
-                                                    onPressed: () async {
-                                                      setState(() {
-                                                        musicController.favSongs
-                                                            ?.add(currentAudio);
-                                                        box.put(
-                                                            "favourites",
-                                                            musicController
-                                                                .favSongs!);
-                                                        musicController
-                                                                .favSongs =
-                                                            box.get(
-                                                                "favourites");
-                                                      });
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.favorite_outline,
-                                                      color: Colors.white,
-                                                      size: width * .04,
-                                                    )),
-                                              ),
-                                            )
-                                          : Container(
-                                              height: height * .05,
-                                              width: width * .1,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: Center(
-                                                child: IconButton(
-                                                    onPressed: () async {
-                                                      setState(
-                                                        () {
-                                                          musicController.favSongs!
-                                                              .removeWhere((element) =>
-                                                                  element.id
-                                                                      .toString() ==
-                                                                  currentAudio
-                                                                      .id
-                                                                      .toString());
-
-                                                          box.put(
-                                                              "favourites",
-                                                              musicController
-                                                                  .favSongs!);
-                                                        },
-                                                      );
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.favorite,
-                                                      color: commonRed(),
-                                                      size: width * .04,
-                                                    )),
-                                              ),
-                                            );
-                                    },
-                                  ),
+                                  musicController.favSongs!
+                                          .where((element) =>
+                                              element.id.toString() ==
+                                              currentAudio.id.toString())
+                                          .isEmpty
+                                      ? AddToFavourites(
+                                          height: height,
+                                          width: width,
+                                          currentAudio: currentAudio)
+                                      : RemoveFromFavourite(
+                                          height: height,
+                                          width: width,
+                                          currentAudio: currentAudio),
                                   const SizedBox(
                                     width: 10,
                                   )
@@ -229,19 +154,33 @@ class MiniPlayer extends StatelessWidget {
         });
   }
 
+  IconButton IconSongController(
+    double width,
+  ) {
+    return IconButton(
+      onPressed: () {
+        prev();
+      },
+      icon: FaIcon(
+        FontAwesomeIcons.backwardStep,
+        size: width * .050,
+      ),
+    );
+  }
+
   void next() async {
-    if (nextDone) {
-      nextDone = false;
+    if (musicController.nextDone) {
+      musicController.nextDone = false;
       await player.next();
-      nextDone = true;
+      musicController.nextDone = true;
     }
   }
 
   void prev() async {
-    if (prevDone) {
-      prevDone = false;
+    if (musicController.prevDone) {
+      musicController.prevDone = false;
       await player.previous();
-      prevDone = true;
+      musicController.prevDone = true;
     }
   }
 }

@@ -8,6 +8,7 @@ import 'package:bromusic/view/screens/mini_player/mini_player.dart';
 import 'package:bromusic/view/screens/player/player.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -65,13 +66,13 @@ class RecentScreen extends StatelessWidget {
                                             artist: element.artist,
                                           )));
                                     }
-                                    CurrentlyPlaying(
+                                    await CurrentlyPlaying(
                                             fullSongs: playlistPlay,
                                             index: index)
                                         .openAudioPlayer(
                                             index: index, audios: playlistPlay);
 
-                                    await showBottomSheet(
+                                    showBottomSheet(
                                         backgroundColor: Colors.transparent,
                                         clipBehavior: Clip.hardEdge,
                                         context: context,
@@ -165,7 +166,7 @@ class RecentScreen extends StatelessWidget {
                                                                               playlistAudios.removeAt(index);
                                                                               box.put("recent", playlistAudios);
 
-                                                                              Navigator.pop(context);
+                                                                              Get.back();
                                                                             },
                                                                             icon: const Icon(
                                                                               Icons.check,
@@ -174,7 +175,7 @@ class RecentScreen extends StatelessWidget {
                                                                             label: textHomeFunction("YES", 14)),
                                                                         TextButton.icon(
                                                                             onPressed: () {
-                                                                              Navigator.pop(context);
+                                                                              Get.back();
                                                                             },
                                                                             icon: const Icon(
                                                                               Icons.close,

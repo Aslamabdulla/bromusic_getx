@@ -8,16 +8,13 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-class TopBeatsScreen extends StatefulWidget {
-  const TopBeatsScreen({Key? key}) : super(key: key);
+class TopBeatsScreen extends StatelessWidget {
+  TopBeatsScreen({Key? key}) : super(key: key);
 
-  @override
-  State<TopBeatsScreen> createState() => _TopBeatsScreenState();
-}
-
-class _TopBeatsScreenState extends State<TopBeatsScreen> {
   final box = SongBox.getInstance();
+
   List playlistName = [];
+
   String? playlistTitle = '';
 
   @override
