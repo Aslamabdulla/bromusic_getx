@@ -99,8 +99,8 @@ class _AllSongsState extends State<AllSongs> {
                 itemBuilder: (context, index) {
                   List? recentlyPlay = box.get("recent");
 
-                  final cache = savedSongs(
-                      dataBaseSongs, fullSongs[index].metas.id.toString());
+                  final cache = savedSongs(dataBaseSongs,
+                      musicController.fullSongs[index].metas.id.toString());
 
                   return Container(
                     margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -109,7 +109,9 @@ class _AllSongsState extends State<AllSongs> {
                       child: GestureDetector(
                         onTap: () async {
                           CurrentlyPlaying(fullSongs: [], index: index)
-                              .openAudioPlayer(index: index, audios: fullSongs);
+                              .openAudioPlayer(
+                                  index: index,
+                                  audios: musicController.fullSongs);
                           currentIndex = index;
                           isTapped = true;
                           List existingSong = [];
@@ -127,18 +129,22 @@ class _AllSongsState extends State<AllSongs> {
                             await box.put("recent", temp);
                           }
 
+                          musicController.dataBaseSongs[index].count =
+                              musicController.dataBaseSongs[index].count! + 1;
+
                           showBottomSheet(
+                              enableDrag: false,
                               backgroundColor: Colors.transparent,
                               clipBehavior: Clip.hardEdge,
                               context: context,
-                              builder: (context) => MiniPlayer(
-                                  allSongs: fullSongs, index: index));
+                              builder: (context) => MiniPlayer(index: index));
                         },
                         onDoubleTap: () async {
                           await Navigator.of(context)
                               .push(CupertinoPageRoute(builder: ((context) {
                             return NowPlayingScreen(
-                                fullSongs: fullSongs, index: currentIndex);
+                                fullSongs: musicController.fullSongs,
+                                index: currentIndex);
                           })));
                         },
                         child: ValueListenableBuilder(
@@ -174,9 +180,8 @@ class _AllSongsState extends State<AllSongs> {
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                  id: int.parse(fullSongs[index]
-                                                      .metas
-                                                      .id
+                                                  id: int.parse(musicController
+                                                      .fullSongs[index].metas.id
                                                       .toString()),
                                                   type: ArtworkType.AUDIO)),
                                           const SizedBox(width: 5),
@@ -187,7 +192,8 @@ class _AllSongsState extends State<AllSongs> {
                                               Container(
                                                 width: width * .45,
                                                 child: textHomeFunction(
-                                                    fullSongs[index]
+                                                    musicController
+                                                        .fullSongs[index]
                                                         .metas
                                                         .title!,
                                                     14),
@@ -197,12 +203,15 @@ class _AllSongsState extends State<AllSongs> {
                                               ),
                                               Container(
                                                   child: textHomeSubFunction(
-                                                      fullSongs[index]
+                                                      musicController
+                                                                  .fullSongs[
+                                                                      index]
                                                                   .metas
                                                                   .artist! ==
                                                               "<unknown>"
                                                           ? "Unknown Artist"
-                                                          : fullSongs[index]
+                                                          : musicController
+                                                              .fullSongs[index]
                                                               .metas
                                                               .artist!,
                                                       10)),
@@ -228,7 +237,8 @@ class _AllSongsState extends State<AllSongs> {
                                             child: StatefulBuilder(
                                               builder: (context, setState) {
                                                 return PopupMenu(
-                                                    id: fullSongs[index]
+                                                    id: musicController
+                                                        .fullSongs[index]
                                                         .metas
                                                         .id
                                                         .toString());
@@ -248,7 +258,7 @@ class _AllSongsState extends State<AllSongs> {
                     ),
                   );
                 },
-                itemCount: fullSongs.length,
+                itemCount: musicController.fullSongs.length,
                 // item.data!.length,
               );
             },

@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 
-import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 

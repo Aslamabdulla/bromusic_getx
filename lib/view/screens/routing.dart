@@ -68,7 +68,7 @@ class _NavigationRoutingState extends State<NavigationRouting> {
                 },
                 icon: const Icon(
                   Icons.playlist_add,
-                  size: 30,
+                  size: 25,
                 )),
             IconButton(
                 onPressed: () {
@@ -79,7 +79,7 @@ class _NavigationRoutingState extends State<NavigationRouting> {
                 },
                 icon: const Icon(
                   Icons.hearing,
-                  size: 30,
+                  size: 25,
                 )),
             Padding(
                 padding: const EdgeInsets.only(right: 15.0),
@@ -92,7 +92,7 @@ class _NavigationRoutingState extends State<NavigationRouting> {
                   },
                   icon: const Icon(
                     Icons.search,
-                    size: 30,
+                    size: 25,
                   ),
                 )),
           ],

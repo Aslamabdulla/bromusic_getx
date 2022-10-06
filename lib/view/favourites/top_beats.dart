@@ -63,7 +63,7 @@ class _TopBeatsScreenState extends State<TopBeatsScreen> {
             // width: width,
             // height: height,
             decoration: boxDecorationImage(),
-            child: const RecentScreen()),
+            child: RecentScreen()),
       ),
     );
   }

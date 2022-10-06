@@ -109,11 +109,12 @@ class _SearchScreenState extends State<SearchScreen> {
                           search = value.trim();
                         });
                       }),
-                      textAlign: TextAlign.end,
+                      textAlign: TextAlign.start,
                       decoration: InputDecoration(
-                        suffixIcon: const Icon(
+                        prefixIcon: const Icon(
                           Icons.search,
-                          size: 40,
+                          size: 30,
+                          color: Colors.black,
                         ),
                         hintText: "Search Songs",
                         hintStyle: textWelcomeSub(),
@@ -159,8 +160,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                                       context: context,
                                                       builder: (context) =>
                                                           MiniPlayer(
-                                                              allSongs:
-                                                                  searchResult,
                                                               index: index));
                                                 },
                                                 child: ListTile(

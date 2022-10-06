@@ -11,17 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class RecentScreen extends StatefulWidget {
-  const RecentScreen({Key? key}) : super(key: key);
+class RecentScreen extends StatelessWidget {
+  RecentScreen({Key? key}) : super(key: key);
 
-  @override
-  State<RecentScreen> createState() => _RecentScreenState();
-}
-
-class _RecentScreenState extends State<RecentScreen> {
   final box = SongBox.getInstance();
+
   List<AllAudios>? dataBaseSongs = [];
+
   List<AllAudios>? playlistAudios = [];
+
   List<Audio> playlistPlay = [];
 
   @override
@@ -77,9 +75,8 @@ class _RecentScreenState extends State<RecentScreen> {
                                         backgroundColor: Colors.transparent,
                                         clipBehavior: Clip.hardEdge,
                                         context: context,
-                                        builder: (context) => MiniPlayer(
-                                            allSongs: playlistPlay,
-                                            index: index));
+                                        builder: (context) =>
+                                            MiniPlayer(index: index));
                                   },
                                   child: ValueListenableBuilder(
                                     valueListenable: switched,

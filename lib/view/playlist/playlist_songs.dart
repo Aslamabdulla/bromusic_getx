@@ -10,19 +10,16 @@ import 'package:bromusic/view/screens/player/player.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class PlaylistSongsView extends StatefulWidget {
-  const PlaylistSongsView({Key? key, required this.playlistName})
-      : super(key: key);
+class PlaylistSongsView extends StatelessWidget {
+  PlaylistSongsView({Key? key, required this.playlistName}) : super(key: key);
   final String playlistName;
 
-  @override
-  State<PlaylistSongsView> createState() => _PlaylistSongsViewState();
-}
-
-class _PlaylistSongsViewState extends State<PlaylistSongsView> {
   final box = SongBox.getInstance();
+
   List<AllAudios>? dataBaseSongs = [];
+
   List<AllAudios>? playlistAudios = [];
+
   List<Audio> playlistPlay = [];
 
   @override
@@ -63,7 +60,7 @@ class _PlaylistSongsViewState extends State<PlaylistSongsView> {
                   child: ValueListenableBuilder(
                 valueListenable: box.listenable(),
                 builder: ((context, boxes, _) {
-                  var playlistAudios = box.get(widget.playlistName)!;
+                  var playlistAudios = box.get(playlistName)!;
 
                   return playlistAudios.isEmpty
                       ? SizedBox(
@@ -98,9 +95,8 @@ class _PlaylistSongsViewState extends State<PlaylistSongsView> {
                                         backgroundColor: Colors.transparent,
                                         clipBehavior: Clip.hardEdge,
                                         context: context,
-                                        builder: (context) => MiniPlayer(
-                                            allSongs: playlistPlay,
-                                            index: index));
+                                        builder: (context) =>
+                                            MiniPlayer(index: index));
                                   },
                                   child: Container(
                                       padding: const EdgeInsets.all(10),
@@ -163,7 +159,7 @@ class _PlaylistSongsViewState extends State<PlaylistSongsView> {
                                                                       TextButton.icon(
                                                                           onPressed: () {
                                                                             playlistAudios.removeAt(index);
-                                                                            box.put(widget.playlistName,
+                                                                            box.put(playlistName,
                                                                                 playlistAudios);
 
                                                                             Navigator.pop(context);

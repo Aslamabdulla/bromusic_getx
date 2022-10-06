@@ -1,4 +1,5 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/controller/controller.dart';
 
 import 'package:bromusic/main.dart';
 
@@ -7,6 +8,8 @@ import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/playlist/playlist.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class PopupMenu extends StatefulWidget {
@@ -29,12 +32,13 @@ class _PopupMenuState extends State<PopupMenu> {
   List<AllAudios> dataSongs = [];
 
   List<Audio> listSongs = [];
+  final MusicController musicController = Get.put(MusicController());
 
   @override
   Widget build(BuildContext context) {
-    dataBaseSongs = box.get("music") as List<AllAudios>;
+    musicController.dataBaseSongs = box.get("music") as List<AllAudios>;
     List? favouriteSongs = box.get("favourites");
-    final cache = savedSongs(dataBaseSongs, widget.id);
+    final cache = savedSongs(musicController.dataBaseSongs, widget.id);
     return PopupMenuButton(
       itemBuilder: (BuildContext ctx) => [
         favouriteSongs!

@@ -78,6 +78,12 @@ boxDecorSongsTitle() {
   );
 }
 
+boxDecorMiniTitle() {
+  return const BoxDecoration(
+    borderRadius: BorderRadius.all(Radius.circular(10)),
+  );
+}
+
 imageContainer() {
   return ClipRRect(
     borderRadius: BorderRadius.circular(20),

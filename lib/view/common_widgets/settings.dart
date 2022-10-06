@@ -6,14 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -135,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SizedBox(
                 height: 350,
               ),
-              textAboutunction("VERSION 1.0", 12),
+              textAboutunction("VERSION 2.0", 12),
             ],
           ),
         ),

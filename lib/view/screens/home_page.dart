@@ -75,7 +75,7 @@ class _HomepageState extends State<Homepage> {
                         onTap: () {
                           Navigator.of(context)
                               .push(CupertinoPageRoute(builder: ((context) {
-                            return const FavouritesScreen();
+                            return FavouritesScreen();
                           })));
                         },
                         child: horizListHomeScreen(
@@ -132,7 +132,7 @@ class _HomepageState extends State<Homepage> {
             Container(
               padding: const EdgeInsets.only(bottom: 0),
               height: height * .43,
-              child: const RecentScreen(),
+              child: RecentScreen(),
             )
           ],
         ),

@@ -14,14 +14,16 @@ class AllAudios extends HiveObject {
   int? duration;
   @HiveField(4)
   String? artist;
+  @HiveField(5)
+  int? count;
 
-  AllAudios({
-    required this.path,
-    required this.id,
-    required this.title,
-    required this.duration,
-    required this.artist,
-  });
+  AllAudios(
+      {required this.path,
+      required this.id,
+      required this.title,
+      required this.duration,
+      required this.artist,
+      this.count = 0});
 }
 
 String boxName = "songs";

@@ -50,13 +50,13 @@ class _NamePageState extends State<NamePage> {
               Stack(
                 children: [
                   Container(
-                    height: .36 * height,
+                    height: .34 * height,
                     width: width,
                     decoration: boxDecorRedTwoEdge(),
                   ),
                   Center(
                     child: Container(
-                      margin: EdgeInsets.only(top: .18 * height),
+                      margin: EdgeInsets.only(top: .14 * height),
                       height: height / 3,
                       width: width / 1.5,
                       child: Image.asset("assets/images/tape.png"),
