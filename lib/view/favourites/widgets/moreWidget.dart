@@ -1,5 +1,7 @@
+import 'package:bromusic/controller/favourite_controller.dart';
 import 'package:bromusic/view/menu_item/pop_up.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RowMoreButton extends StatelessWidget {
   int index;
@@ -20,9 +22,13 @@ class RowMoreButton extends StatelessWidget {
               //
             },
             icon: const Icon(Icons.play_arrow)),
-        PopupMenu(
-          id: favSongs[index].id!.toString(),
-        )
+        GetBuilder<FavouriteController>(
+            init: FavouriteController(),
+            builder: (FavouriteController favMusic) {
+              return PopupMenu(
+                id: favSongs[index].id!.toString(),
+              );
+            })
       ],
     );
   }

@@ -1,10 +1,10 @@
-import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
+import 'package:bromusic/view/playlist/playlist.dart';
 import 'package:flutter/material.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 Future openEditDialog(BuildContext context, String playlistName) {
-  final box = SongBox.getInstance();
   String? title;
   final textKey = GlobalKey<FormState>();
   return showDialog(
@@ -19,7 +19,7 @@ Future openEditDialog(BuildContext context, String playlistName) {
             title = value.trim();
           },
           validator: (value) {
-            List keys = box.keys.toList();
+            List keys = playlistController.box.keys.toList();
             if (value!.trim() == "") {
               return "Please fill name";
             }
@@ -32,24 +32,17 @@ Future openEditDialog(BuildContext context, String playlistName) {
         ),
       ),
       actions: [
-        TextButton(
-            onPressed: () {},
-            child: TextButton.icon(
-                onPressed: () {
-                  if (textKey.currentState!.validate()) {
-                    List? playlistTitle = box.get(playlistName);
-                    box.put(title, playlistTitle!);
-                    box.delete(playlistName);
-                    Navigator.pop(context);
-                    print(playlistName);
-                    print(title);
-                  }
-                },
-                icon: Icon(
-                  Icons.check,
-                  color: Colors.greenAccent,
-                ),
-                label: textButtonFunction("SUBMIT", 14, commonBlue())))
+        TextButton.icon(
+            onPressed: () {
+              if (textKey.currentState!.validate()) {
+                playlistController.addPlayList(title!, playlistName);
+              }
+            },
+            icon: const Icon(
+              Icons.check,
+              color: Colors.greenAccent,
+            ),
+            label: textButtonFunction("SUBMIT", 14, commonBlue()))
       ],
     ),
   );

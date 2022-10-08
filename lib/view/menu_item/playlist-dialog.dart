@@ -1,6 +1,7 @@
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Future openDialog(BuildContext context) {
@@ -37,7 +38,7 @@ Future openDialog(BuildContext context) {
           onPressed: () {
             if (textKey.currentState!.validate()) {
               box.put(title, playlistName);
-              Navigator.pop(context);
+              Get.back();
             }
           },
           icon: const Icon(

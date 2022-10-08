@@ -1,26 +1,21 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/controller/playlist_controller.dart';
 
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
+import 'package:bromusic/view/playlist/playlist.dart';
 import 'package:bromusic/view/screens/mini_player/mini_player.dart';
 import 'package:bromusic/view/screens/player/player.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class PlaylistSongsView extends StatelessWidget {
   PlaylistSongsView({Key? key, required this.playlistName}) : super(key: key);
   final String playlistName;
-
-  final box = SongBox.getInstance();
-
-  List<AllAudios>? dataBaseSongs = [];
-
-  List<AllAudios>? playlistAudios = [];
-
-  List<Audio> playlistPlay = [];
 
   @override
   Widget build(BuildContext context) {
@@ -57,141 +52,149 @@ class PlaylistSongsView extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                  child: ValueListenableBuilder(
-                valueListenable: box.listenable(),
-                builder: ((context, boxes, _) {
-                  var playlistAudios = box.get(playlistName)!;
+                  child: GetBuilder<PlaylistController>(
+                      init: PlaylistController(),
+                      builder: (PlaylistController playlistController) {
+                        var playlistAudios =
+                            playlistController.box.get(playlistName)!;
 
-                  return playlistAudios.isEmpty
-                      ? SizedBox(
-                          child: Center(
-                          child: textHomeFunction("PLEASE ADD SOME SONGS", 14),
-                        ))
-                      : Container(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                              height: 10,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                  onTap: () async {
-                                    for (var element in playlistAudios) {
-                                      playlistPlay.add(Audio.file(element.path!,
-                                          metas: Metas(
-                                            title: element.title,
-                                            id: element.id.toString(),
-                                            artist: element.artist,
-                                          )));
-                                    }
-                                    CurrentlyPlaying(
-                                            fullSongs: playlistPlay,
-                                            index: index)
-                                        .openAudioPlayer(
-                                            index: index, audios: playlistPlay);
+                        return playlistAudios.isEmpty
+                            ? SizedBox(
+                                child: Center(
+                                child: textHomeFunction(
+                                    "PLEASE ADD SOME SONGS", 14),
+                              ))
+                            : Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: ListView.separated(
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                    height: 10,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                        onTap: () async {
+                                          for (var element in playlistAudios) {
+                                            playlistController.playlistPlay
+                                                .add(Audio.file(element.path!,
+                                                    metas: Metas(
+                                                      title: element.title,
+                                                      id: element.id.toString(),
+                                                      artist: element.artist,
+                                                    )));
+                                          }
+                                          CurrentlyPlaying(
+                                                  fullSongs: playlistController
+                                                      .playlistPlay,
+                                                  index: index)
+                                              .openAudioPlayer(
+                                                  index: index,
+                                                  audios: playlistController
+                                                      .playlistPlay);
 
-                                    await showBottomSheet(
-                                        backgroundColor: Colors.transparent,
-                                        clipBehavior: Clip.hardEdge,
-                                        context: context,
-                                        builder: (context) =>
-                                            MiniPlayer(index: index));
+                                          await showBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              clipBehavior: Clip.hardEdge,
+                                              context: context,
+                                              builder: (context) =>
+                                                  MiniPlayer(index: index));
+                                        },
+                                        child: Container(
+                                            padding: const EdgeInsets.all(10),
+                                            decoration: playlistBoxDecoration(),
+                                            width: width,
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    height: height * .10,
+                                                    child: Image.asset(
+                                                      "assets/images/tape.png",
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: width * .56,
+                                                        child: textHomeFunction(
+                                                            playlistAudios[
+                                                                    index]
+                                                                .title,
+                                                            16),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      textHomeSubFunction(
+                                                          playlistAudios[index]
+                                                              .artist,
+                                                          12),
+                                                    ],
+                                                  ),
+                                                  PopupMenuButton(
+                                                      itemBuilder: (BuildContext
+                                                              context) =>
+                                                          [
+                                                            PopupMenuItem(
+                                                                value: "1",
+                                                                child: textHomeFunction(
+                                                                    "Remove Song",
+                                                                    12)),
+                                                          ],
+                                                      onSelected: (value) {
+                                                        if (value == "1") {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) =>
+                                                                      AlertDialog(
+                                                                        title:
+                                                                            Center(
+                                                                          child: textHomeFunction(
+                                                                              "PLEASE CONFIRM DELETION",
+                                                                              16),
+                                                                        ),
+                                                                        content:
+                                                                            Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceAround,
+                                                                          children: [
+                                                                            TextButton.icon(
+                                                                                onPressed: () {
+                                                                                  playlistController.removePlayListSongs(playlistAudios, index);
+                                                                                  playlistController.box.put(playlistName, playlistAudios);
+
+                                                                                  Get.back();
+                                                                                },
+                                                                                icon: const Icon(
+                                                                                  Icons.check,
+                                                                                  color: Colors.greenAccent,
+                                                                                ),
+                                                                                label: textHomeFunction("YES", 14)),
+                                                                            TextButton.icon(
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                icon: const Icon(
+                                                                                  Icons.close,
+                                                                                  color: Colors.redAccent,
+                                                                                ),
+                                                                                label: textHomeFunction("NO", 14)),
+                                                                          ],
+                                                                        ),
+                                                                      ));
+                                                        }
+                                                      })
+                                                ])));
                                   },
-                                  child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: playlistBoxDecoration(),
-                                      width: width,
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              height: height * .10,
-                                              child: Image.asset(
-                                                "assets/images/tape.png",
-                                              ),
-                                            ),
-                                            Column(
-                                              children: [
-                                                SizedBox(
-                                                  width: width * .56,
-                                                  child: textHomeFunction(
-                                                      playlistAudios[index]
-                                                          .title,
-                                                      16),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                textHomeSubFunction(
-                                                    playlistAudios[index]
-                                                        .artist,
-                                                    12),
-                                              ],
-                                            ),
-                                            PopupMenuButton(
-                                                itemBuilder:
-                                                    (BuildContext context) => [
-                                                          PopupMenuItem(
-                                                              value: "1",
-                                                              child: textHomeFunction(
-                                                                  "Remove Song",
-                                                                  12)),
-                                                        ],
-                                                onSelected: (value) {
-                                                  if (value == "1") {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (context) =>
-                                                                AlertDialog(
-                                                                  title: Center(
-                                                                    child: textHomeFunction(
-                                                                        "PLEASE CONFIRM DELETION",
-                                                                        16),
-                                                                  ),
-                                                                  content: Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceAround,
-                                                                    children: [
-                                                                      TextButton.icon(
-                                                                          onPressed: () {
-                                                                            playlistAudios.removeAt(index);
-                                                                            box.put(playlistName,
-                                                                                playlistAudios);
-
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          icon: const Icon(
-                                                                            Icons.check,
-                                                                            color:
-                                                                                Colors.greenAccent,
-                                                                          ),
-                                                                          label: textHomeFunction("YES", 14)),
-                                                                      TextButton.icon(
-                                                                          onPressed: () {
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          icon: const Icon(
-                                                                            Icons.close,
-                                                                            color:
-                                                                                Colors.redAccent,
-                                                                          ),
-                                                                          label: textHomeFunction("NO", 14)),
-                                                                    ],
-                                                                  ),
-                                                                ));
-                                                  }
-                                                })
-                                          ])));
-                            },
-                            itemCount: playlistAudios.length,
-                          ),
-                        );
-                }),
-              )),
+                                  itemCount: playlistAudios.length,
+                                ),
+                              );
+                      })),
             ],
           ),
         ),

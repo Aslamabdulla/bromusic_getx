@@ -1,6 +1,7 @@
 import 'package:bromusic/controller/controller.dart';
 import 'package:bromusic/main.dart';
 import 'package:bromusic/model/box_model.dart';
+import 'package:bromusic/view/favourites/favourites.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +33,7 @@ class AddToFavourites extends StatelessWidget {
             child: Center(
               child: IconButton(
                   onPressed: () async {
-                    musicController.addFavourite(currentAudio);
+                    favouriteController.addFavourite(currentAudio);
                   },
                   icon: Icon(
                     Icons.favorite_outline,

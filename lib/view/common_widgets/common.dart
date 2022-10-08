@@ -289,8 +289,8 @@ settingsBox(IconData icons, String text) {
           ),
           FittedBox(
               fit: BoxFit.contain,
-              child:
-                  textSettingsunction(text, 14, Color.fromRGBO(2, 48, 71, 1)))
+              child: textSettingsunction(
+                  text, 14, const Color.fromRGBO(2, 48, 71, 1)))
         ],
       ));
 }

@@ -43,9 +43,9 @@ class SplashScreen extends StatelessWidget {
       username = usernameTemp;
     }
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
     Get.offAll(
-      isFirsttime ? WelcomeScreen() : NavigationRouting(user: username),
+      () => isFirsttime ? WelcomeScreen() : NavigationRouting(user: username),
     );
     // List<dynamic> libraryKeys = box.keys.toList();
   }

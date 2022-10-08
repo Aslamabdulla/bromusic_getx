@@ -1,8 +1,13 @@
+import 'package:bromusic/controller/favourite_controller.dart';
+import 'package:bromusic/controller/playlist_controller.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/menu_item/playlist-dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+PlaylistController playlistController = Get.put(PlaylistController());
 
 class PlaylistScreen extends StatefulWidget {
   final AllAudios song;
@@ -13,13 +18,9 @@ class PlaylistScreen extends StatefulWidget {
 }
 
 class _PlaylistScreenState extends State<PlaylistScreen> {
-  List playlistName = [];
-  List<dynamic>? playlistAudios = [];
-
   @override
   Widget build(BuildContext context) {
-    final box = SongBox.getInstance();
-    playlistName = box.keys.toList();
+    playlistController.playlistName = playlistController.box.keys.toList();
     return Container(
       decoration: boxDecorTwoEdge(),
       child: ListView(
@@ -48,7 +49,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
               )
             ],
           ),
-          ...playlistName
+          ...playlistController.playlistName
               .map(
                 (audio) => audio != "music" &&
                         audio != "favourites" &&
@@ -58,21 +59,24 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                         leading: Image.asset("assets/images/tape.png"),
                         title: textHomeSubFunction(audio.toString(), 14),
                         onTap: () async {
-                          playlistAudios = box.get(audio);
+                          playlistController.playlistAudios =
+                              playlistController.box.get(audio);
                           List existingSongs = [];
-                          existingSongs = playlistAudios!
+                          existingSongs = playlistController.playlistAudios!
                               .where((element) =>
                                   element.id.toString() ==
                                   widget.song.id.toString())
                               .toList();
                           if (existingSongs.isEmpty) {
-                            final audios = box.get("music") as List<AllAudios>;
+                            final audios = playlistController.box.get("music")
+                                as List<AllAudios>;
                             final cache = audios.firstWhere((element) =>
                                 element.id.toString() ==
                                 widget.song.id.toString());
-                            playlistAudios?.add(cache);
-                            await box.put(audio, playlistAudios!);
-                            Navigator.pop(context);
+                            playlistController.playlistAudios?.add(cache);
+                            await playlistController.box
+                                .put(audio, playlistController.playlistAudios!);
+                            Get.back();
                             snakBar(context, "Added to playlist", "Song");
                           } else {
                             Navigator.pop(context);

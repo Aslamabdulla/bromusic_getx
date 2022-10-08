@@ -1,10 +1,12 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/controller/controller.dart';
+import 'package:bromusic/controller/favourite_controller.dart';
 
 import 'package:bromusic/main.dart';
 
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
+import 'package:bromusic/view/favourites/favourites.dart';
 import 'package:bromusic/view/playlist/playlist.dart';
 
 import 'package:flutter/material.dart';
@@ -19,13 +21,14 @@ class PopupMenu extends StatelessWidget {
 
   final box = SongBox.getInstance();
 
-  final MusicController musicController = Get.put(MusicController());
+  final FavouriteController favouriteController =
+      Get.put(FavouriteController());
 
   @override
   Widget build(BuildContext context) {
-    musicController.dataBaseSongs = box.get("music") as List<AllAudios>;
+    favouriteController.dataBaseSongs = box.get("music") as List<AllAudios>;
     List? favouriteSongs = box.get("favourites");
-    final cache = savedSongs(musicController.dataBaseSongs, id);
+    final cache = savedSongs(favouriteController.dataBaseSongs, id);
     return PopupMenuButton(
       itemBuilder: (BuildContext ctx) => [
         favouriteSongs!
@@ -35,7 +38,7 @@ class PopupMenu extends StatelessWidget {
             ? PopupMenuItem(
                 value: "0",
                 onTap: () async {
-                  musicController.popupAddFav(cache, favouriteSongs);
+                  favouriteController.popupAddFav(cache, favouriteSongs);
                   snakBar(context, "added to favourites", cache.title!);
                 },
                 child: ListTile(
@@ -45,7 +48,7 @@ class PopupMenu extends StatelessWidget {
             : PopupMenuItem(
                 value: "0",
                 onTap: () async {
-                  musicController.popupRemoveFav(cache, favouriteSongs);
+                  favouriteController.popupRemoveFav(cache, favouriteSongs);
                   snakBar(context, "removed from Favourites", cache.title!);
                 },
                 child: ListTile(

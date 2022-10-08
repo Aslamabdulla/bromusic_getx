@@ -1,4 +1,5 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/main.dart';
 
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
@@ -14,8 +15,6 @@ import 'package:on_audio_query/on_audio_query.dart';
 
 class RecentScreen extends StatelessWidget {
   RecentScreen({Key? key}) : super(key: key);
-
-  final box = SongBox.getInstance();
 
   List<AllAudios>? dataBaseSongs = [];
 
@@ -39,9 +38,9 @@ class RecentScreen extends StatelessWidget {
           Expanded(
               flex: 2,
               child: ValueListenableBuilder(
-                valueListenable: box.listenable(),
+                valueListenable: musicController.box.listenable(),
                 builder: ((context, boxes, _) {
-                  var playlistAudios = box.get("recent")!;
+                  var playlistAudios = musicController.box.get("recent")!;
 
                   return playlistAudios.isEmpty
                       ? SizedBox(
@@ -164,7 +163,7 @@ class RecentScreen extends StatelessWidget {
                                                                         TextButton.icon(
                                                                             onPressed: () {
                                                                               playlistAudios.removeAt(index);
-                                                                              box.put("recent", playlistAudios);
+                                                                              musicController.box.put("recent", playlistAudios);
 
                                                                               Get.back();
                                                                             },
