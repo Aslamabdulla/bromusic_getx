@@ -26,22 +26,7 @@ import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
-class NowPlayingScreen extends StatefulWidget {
-  const NowPlayingScreen({
-    Key? key,
-  }) : super(key: key);
-
-  Audio find(List<Audio> source, String fromPath) {
-    return source.firstWhere((element) => element.path == fromPath);
-  }
-
-  ///commented
-  @override
-  State<NowPlayingScreen> createState() => _NowPlayingScreenState();
-}
-
-class _NowPlayingScreenState extends State<NowPlayingScreen>
-    with TickerProviderStateMixin {
+class NowPlayingScreen extends StatelessWidget {
   bool nextDone = true;
 
   bool prevDone = true;
@@ -59,14 +44,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
   bool shuffleSong = false;
   bool loopSong = false;
   bool isPlaySong = true;
-
-  @override
-  void initState() {
-    // musicController.animationRotate();
-    super.initState();
-
-    dataBaseSongs = box.get("music") as List<AllAudios>;
-  }
+  NowPlayingScreen({super.key});
 
   final slider = SleekCircularSlider(
     appearance: CircularSliderAppearance(
@@ -85,6 +63,9 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
   var currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataBaseSongs = box.get("music") as List<AllAudios>;
+    });
     var size = MediaQuery.of(context).size;
     var width = size.width;
     var height = size.height;
@@ -112,7 +93,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
           width: width,
           child: player.builderCurrent(
               builder: (context, Playing? currentPlaying) {
-            final mySongs = widget.find(musicController.fullSongs,
+            final mySongs = musicController.find(musicController.fullSongs,
                 currentPlaying!.audio.assetAudioPath);
             final currentAudio = musicController.dataBaseSongs.firstWhere(
                 (element) =>
@@ -417,3 +398,46 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
     }
   }
 }
+
+// class NowPlayingScreen extends StatefulWidget {
+//   const NowPlayingScreen({
+//     Key? key,
+//   }) : super(key: key);
+
+//   // Audio find(List<Audio> source, String fromPath) {
+//   //   return source.firstWhere((element) => element.path == fromPath);
+//   // }
+
+//   ///commented
+//   @override
+//   State<NowPlayingScreen> createState() => _NowPlayingScreenState();
+// }
+
+// class _NowPlayingScreenState extends State<NowPlayingScreen>
+//     with TickerProviderStateMixin {
+//   bool nextDone = true;
+
+//   bool prevDone = true;
+
+//   bool hideButton = true;
+//   String songTitle = "";
+//   AllAudios? music;
+//   final AssetsAudioPlayer player = AssetsAudioPlayer.withId("0");
+
+//   final box = SongBox.getInstance();
+//   List<AllAudios> dataBaseSongs = [];
+//   List<dynamic>? favSongs = [];
+
+//   bool isPlaying = true;
+//   bool shuffleSong = false;
+//   bool loopSong = false;
+//   bool isPlaySong = true;
+
+//   @override
+//   void initState() {
+//     // musicController.animationRotate();
+//     super.initState();
+
+//     dataBaseSongs = box.get("music") as List<AllAudios>;
+//   }
+// }

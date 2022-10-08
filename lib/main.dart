@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/controller/controller.dart';
+import 'package:bromusic/routes/routes.dart';
 
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
@@ -81,6 +82,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() => MusicController());
+
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return GetMaterialApp(
@@ -88,11 +91,9 @@ class MyApp extends StatelessWidget {
       title: 'Bromusic',
       theme: ThemeData(
           primarySwatch: switched.value ? Colors.deepOrange : Colors.amber),
-      home: firsttime
-          ? SplashScreen()
-          : const Homepage(
-              name: "GUEST",
-            ),
+      initialRoute:
+          firsttime ? RoutesClass.getSplashRoute() : RoutesClass.getNavRoute(),
+      getPages: RoutesClass.routes,
     );
   }
 }

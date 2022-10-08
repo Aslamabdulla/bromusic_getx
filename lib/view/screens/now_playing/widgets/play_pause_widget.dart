@@ -19,9 +19,9 @@ class PlayPauseWidget extends StatelessWidget {
         onPressed: () async {
           await player.playOrPause();
           if (nowplaying) {
-            musicController.animationController.stop();
+            // musicController.animationController.stop();
           } else {
-            musicController.animationController.repeat();
+            // musicController.animationController.repeat();
           }
         },
         icon: Icon(

@@ -28,7 +28,7 @@ class MusicController extends GetxController {
   bool isPlay = true;
   List? favouriteSongs = [];
   ValueNotifier<bool> switched = ValueNotifier(false);
-  late AnimationController animationController;
+  // late AnimationController animationController;
   // final allSongs = RxList<SongModel>([]);
   //  final fetchedSongs = RxList<SongModel>([]);
   //  final dataBaseSongs = RxList<AllAudios>([]);
@@ -45,7 +45,7 @@ class MusicController extends GetxController {
 
   @override
   void dispose() {
-    animationController;
+    // animationController;
     super.dispose();
   }
 

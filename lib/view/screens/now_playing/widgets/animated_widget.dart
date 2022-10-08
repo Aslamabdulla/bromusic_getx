@@ -35,17 +35,17 @@ class AnimatedContainerWidget extends StatelessWidget {
           ],
           shape: BoxShape.circle,
         ),
-        child: AnimatedBuilder(
-            animation: musicController.animationController,
-            builder: (BuildContext context, widget) {
-              return Transform.rotate(
-                angle: musicController.animationController.value * 6.3,
-                child: Image(
-                  image: AssetImage("assets/images/4.png"),
-                  fit: BoxFit.cover,
-                ),
-              );
-            }),
+        // child: AnimatedBuilder(
+        //     animation: musicController.animationController,
+        //     builder: (BuildContext context, widget) {
+        //       return Transform.rotate(
+        //         angle: musicController.animationController.value * 6.3,
+        //         child: Image(
+        //           image: AssetImage("assets/images/4.png"),
+        //           fit: BoxFit.cover,
+        //         ),
+        //       );
+        //     }),
         //  QueryArtworkWidget(
         //   nullArtworkWidget: Image.asset(
         //     "assets/images/4.png",

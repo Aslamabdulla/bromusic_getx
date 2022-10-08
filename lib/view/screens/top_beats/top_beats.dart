@@ -7,6 +7,7 @@ import 'package:bromusic/view/search/search.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TopBeatsScreen extends StatelessWidget {
   TopBeatsScreen({Key? key}) : super(key: key);
@@ -34,10 +35,7 @@ class TopBeatsScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(CupertinoPageRoute(builder: (ctx) {
-                      return const SearchScreen();
-                    }));
+                    Get.to(() => SearchScreen());
                   },
                   icon: const Icon(
                     Icons.search,

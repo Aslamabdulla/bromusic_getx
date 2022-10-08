@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:bromusic/controller/recent_controller.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/menu_item/recently_played.dart';
 import 'package:bromusic/view/screens/home_page/widgets/upper_list_view.dart';
+import 'package:get/get.dart';
 
 class Homepage extends StatelessWidget {
   final String name;
@@ -60,7 +62,11 @@ class Homepage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(bottom: 0),
               height: height * .43,
-              child: RecentScreen(),
+              child: GetBuilder<RecentController>(
+                  init: RecentController(),
+                  builder: (RecentController recentController) {
+                    return RecentScreen();
+                  }),
             )
           ],
         ),

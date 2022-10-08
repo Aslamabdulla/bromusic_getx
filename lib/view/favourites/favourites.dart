@@ -88,8 +88,7 @@ class FavouritesScreen extends StatelessWidget {
                                                 Get.to(
                                                     transition: Transition
                                                         .leftToRightWithFade,
-                                                    () =>
-                                                        const NowPlayingScreen());
+                                                    () => NowPlayingScreen());
                                               },
                                               onTap: () async {
                                                 for (var element in favSongs) {
