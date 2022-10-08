@@ -1,4 +1,8 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/controller/now_playing_controller.dart';
+import 'package:get/get.dart';
+
+NowPlayingController nowPlayingController = Get.put(NowPlayingController());
 
 class CurrentlyPlaying {
   List<Audio> fullSongs;
@@ -12,7 +16,7 @@ class CurrentlyPlaying {
         showNotification: true,
         notificationSettings: const NotificationSettings(stopEnabled: false),
         autoStart: true,
-        loopMode: LoopMode.playlist,
+        loopMode: nowPlayingController.looping,
         headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplugPlayOnPlug,
         playInBackground: PlayInBackground.enabled);
   }

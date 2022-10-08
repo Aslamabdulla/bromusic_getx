@@ -12,10 +12,13 @@ import 'package:bromusic/view/common_widgets/settings.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/animated_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/decor_widget.dart';
+import 'package:bromusic/view/screens/now_playing/widgets/fav_button.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/head_title_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/icon_widget.dart';
+import 'package:bromusic/view/screens/now_playing/widgets/loop_button.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/play_pause_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/progress_bar_widget.dart';
+import 'package:bromusic/view/screens/now_playing/widgets/shuffle_button.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/volume_controller.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -232,139 +235,16 @@ class NowPlayingScreen extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      !shuffleSong
-                                          ? Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    shuffleSong = true;
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.shuffle_rounded,
-                                                    color: Colors.white,
-                                                  )),
-                                            )
-                                          : Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    shuffleSong = false;
-                                                    player.setLoopMode(
-                                                        LoopMode.playlist);
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.shuffle_on_rounded,
-                                                    color: commonYellow(),
-                                                  )),
-                                            ),
+                                      ShuffleButtonwidget(),
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      !loopSong
-                                          ? Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    loopSong = true;
-                                                    player.setLoopMode(
-                                                        LoopMode.single);
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.repeat,
-                                                    color: Colors.white,
-                                                  )),
-                                            )
-                                          : Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    loopSong = false;
-                                                    player.setLoopMode(
-                                                        LoopMode.playlist);
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.repeat_one_rounded,
-                                                    color: commonYellow(),
-                                                  )),
-                                            ),
+                                      LoopButttonWidget(),
                                       const SizedBox(
                                         width: 50,
                                       ),
-                                      favSongs!
-                                              .where((element) =>
-                                                  element.id.toString() ==
-                                                  currentAudio.id.toString())
-                                              .isEmpty
-                                          ? Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    favSongs?.add(currentAudio);
-                                                    box.put("favourites",
-                                                        favSongs!);
-                                                    favSongs =
-                                                        box.get("favourites");
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.favorite_outline,
-                                                    color: Colors.white,
-                                                  )),
-                                            )
-                                          : Container(
-                                              height: 50,
-                                              width: 50,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color:
-                                                    Color.fromRGBO(10, 4, 3, 1),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () async {
-                                                    favSongs!.removeWhere(
-                                                        (element) =>
-                                                            element.id
-                                                                .toString() ==
-                                                            currentAudio.id
-                                                                .toString());
-
-                                                    box.put("favourites",
-                                                        favSongs!);
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.favorite,
-                                                    color: Colors.amberAccent,
-                                                  )),
-                                            )
+                                      FavRoundButton(
+                                          songId: mySongs.metas.id.toString())
                                     ],
                                   )
                                 ],
@@ -398,46 +278,3 @@ class NowPlayingScreen extends StatelessWidget {
     }
   }
 }
-
-// class NowPlayingScreen extends StatefulWidget {
-//   const NowPlayingScreen({
-//     Key? key,
-//   }) : super(key: key);
-
-//   // Audio find(List<Audio> source, String fromPath) {
-//   //   return source.firstWhere((element) => element.path == fromPath);
-//   // }
-
-//   ///commented
-//   @override
-//   State<NowPlayingScreen> createState() => _NowPlayingScreenState();
-// }
-
-// class _NowPlayingScreenState extends State<NowPlayingScreen>
-//     with TickerProviderStateMixin {
-//   bool nextDone = true;
-
-//   bool prevDone = true;
-
-//   bool hideButton = true;
-//   String songTitle = "";
-//   AllAudios? music;
-//   final AssetsAudioPlayer player = AssetsAudioPlayer.withId("0");
-
-//   final box = SongBox.getInstance();
-//   List<AllAudios> dataBaseSongs = [];
-//   List<dynamic>? favSongs = [];
-
-//   bool isPlaying = true;
-//   bool shuffleSong = false;
-//   bool loopSong = false;
-//   bool isPlaySong = true;
-
-//   @override
-//   void initState() {
-//     // musicController.animationRotate();
-//     super.initState();
-
-//     dataBaseSongs = box.get("music") as List<AllAudios>;
-//   }
-// }

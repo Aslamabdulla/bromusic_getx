@@ -2,7 +2,7 @@ import 'package:bromusic/controller/favourite_controller.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/favourites/widgets/image_widget.dart';
 import 'package:bromusic/view/favourites/widgets/list_tile_items.dart';
-import 'package:bromusic/view/favourites/widgets/moreWidget.dart';
+import 'package:bromusic/view/favourites/widgets/row_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

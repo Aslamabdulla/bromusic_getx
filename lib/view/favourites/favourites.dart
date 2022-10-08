@@ -18,7 +18,7 @@ import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/favourites/widgets/image_widget.dart';
 import 'package:bromusic/view/favourites/widgets/list_tile_items.dart';
-import 'package:bromusic/view/favourites/widgets/moreWidget.dart';
+import 'package:bromusic/view/favourites/widgets/row_widget.dart';
 import 'package:bromusic/view/menu_item/pop_up.dart';
 import 'package:bromusic/view/screens/mini_player/mini_player.dart';
 import 'package:bromusic/view/screens/now_playing/now_playing.dart';
