@@ -218,21 +218,21 @@ class _FindMusicState extends State<FindMusic> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (music != null) ...[
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width - 50,
                           child: textFindFunction(music!.title, 24),
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width - 50,
                           child:
                               textFindFunction(music!.artists.first.name, 15),
                         )
                       ] else ...[
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width - 50,
                           child: textFindFunction("TAP TO IDENTIFY SONGS", 24),
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width - 50,
                           child: textFindFunction("FIND MUSIC V2.0", 15),
                         )

@@ -4,6 +4,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/view/common_widgets/favorite_button.dart';
 import 'package:bromusic/view/screens/mini_player/widgets/add_favourites.dart';
 import 'package:bromusic/view/screens/mini_player/widgets/remove_favourite.dart';
+import 'package:bromusic/view/screens/player/player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +18,8 @@ import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/screens/mini_player/widgets/mini_image.dart';
 import 'package:bromusic/view/screens/now_playing/now_playing.dart';
+
+bool isPlayMode = false;
 
 class MiniPlayer extends StatelessWidget {
   int index;
@@ -45,8 +48,8 @@ class MiniPlayer extends StatelessWidget {
       return GestureDetector(
         onTap: () async {
           await Get.to(() => NowPlayingScreen(),
-              transition: Transition.cupertino,
-              duration: Duration(milliseconds: 500));
+              transition: Transition.leftToRightWithFade,
+              duration: const Duration(milliseconds: 300));
         },
         child: ValueListenableBuilder(
           valueListenable: switched,
@@ -100,6 +103,7 @@ class MiniPlayer extends StatelessWidget {
                                   PlayerBuilder.isPlaying(
                                       player: player,
                                       builder: (context, nowplaying) {
+                                        isPlayMode = nowplaying;
                                         return IconButton(
                                             iconSize: height * .050,
                                             onPressed: () async {

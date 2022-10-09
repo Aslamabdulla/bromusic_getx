@@ -3,7 +3,7 @@ import 'package:bromusic/model/box_model.dart';
 
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/screens/onboarding/welcome_screen/welcome_screen.dart';
-import 'package:bromusic/view/screens/routing.dart';
+import 'package:bromusic/view/screens/bottom_nav/routing.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bromusic/main.dart';

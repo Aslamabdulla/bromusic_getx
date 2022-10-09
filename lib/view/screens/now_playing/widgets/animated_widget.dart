@@ -1,6 +1,13 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:bromusic/controller/animation_controller.dart';
 import 'package:bromusic/main.dart';
+import 'package:bromusic/view/screens/mini_player/mini_player.dart';
+import 'package:bromusic/view/screens/player/player.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+AnimationControllerImage animationControllerImage =
+    Get.put(AnimationControllerImage());
 
 class AnimatedContainerWidget extends StatelessWidget {
   const AnimatedContainerWidget({
@@ -15,6 +22,7 @@ class AnimatedContainerWidget extends StatelessWidget {
   final bool glowAnimate;
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
     return AvatarGlow(
       glowColor: Colors.grey.shade600,
       animate: glowAnimate,
@@ -35,26 +43,27 @@ class AnimatedContainerWidget extends StatelessWidget {
           ],
           shape: BoxShape.circle,
         ),
-        // child: AnimatedBuilder(
-        //     animation: musicController.animationController,
-        //     builder: (BuildContext context, widget) {
-        //       return Transform.rotate(
-        //         angle: musicController.animationController.value * 6.3,
-        //         child: Image(
-        //           image: AssetImage("assets/images/4.png"),
-        //           fit: BoxFit.cover,
-        //         ),
-        //       );
-        //     }),
-        //  QueryArtworkWidget(
-        //   nullArtworkWidget: Image.asset(
-        //     "assets/images/4.png",
-        //     fit: BoxFit.cover,
-        //   ),
-        //   type: ArtworkType.AUDIO,
-        //   id: int.parse(mySongs.metas.id!),
-        //   artworkFit: BoxFit.cover,
-        // ),
+        child: AnimatedBuilder(
+            animation: animationControllerImage.animationController,
+            builder: (BuildContext context, widget) {
+              return Transform.rotate(
+                angle: animationControllerImage.animationController.value * 6.3,
+                child: Image(
+                  image: AssetImage("assets/images/4.png"),
+                  fit: BoxFit.cover,
+                ),
+              );
+
+              //  QueryArtworkWidget(
+              //   nullArtworkWidget: Image.asset(
+              //     "assets/images/4.png",
+              //     fit: BoxFit.cover,
+              //   ),
+              //   type: ArtworkType.AUDIO,
+              //   id: int.parse(mySongs.metas.id!),
+              //   artworkFit: BoxFit.cover,
+              // ),
+            }),
       ),
     );
   }

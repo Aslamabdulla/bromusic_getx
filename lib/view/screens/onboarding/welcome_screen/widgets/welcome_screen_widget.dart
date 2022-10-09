@@ -50,8 +50,8 @@ class WelcomeScreenWidget extends StatelessWidget {
           backgroundColor: commonYellow(),
           onConfirmation: () {
             Get.to(() => NamePage(),
-                transition: Transition.cupertino,
-                duration: const Duration(microseconds: 400));
+                transition: Transition.rightToLeft,
+                duration: const Duration(microseconds: 300));
           },
           backgroundColorEnd: commonLightRed(),
         )

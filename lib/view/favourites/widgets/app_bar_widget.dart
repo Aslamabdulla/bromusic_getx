@@ -2,7 +2,7 @@ import 'package:bromusic/controller/controller.dart';
 import 'package:bromusic/main.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/screens/now_playing/now_playing.dart';
-import 'package:bromusic/view/screens/routing.dart';
+import 'package:bromusic/view/screens/bottom_nav/routing.dart';
 import 'package:bromusic/view/search/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

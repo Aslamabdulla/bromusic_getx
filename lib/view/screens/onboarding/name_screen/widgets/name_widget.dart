@@ -1,7 +1,7 @@
 import 'package:bromusic/main.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/screens/onboarding/name_screen/widgets/text_input.dart';
-import 'package:bromusic/view/screens/routing.dart';
+import 'package:bromusic/view/screens/bottom_nav/routing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,8 +57,8 @@ class NameScreenWidget extends StatelessWidget {
             onSwipeButton();
             // firsttime = false;
             Get.offAll(() => NavigationRouting(user: username),
-                transition: Transition.cupertino,
-                duration: const Duration(milliseconds: 400));
+                transition: Transition.rightToLeft,
+                duration: const Duration(microseconds: 300));
           },
           backgroundColorEnd: commonLightYellow(),
         ),

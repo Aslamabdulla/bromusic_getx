@@ -1,14 +1,11 @@
-import 'package:bromusic/controller/controller.dart';
 import 'package:bromusic/controller/playlist_controller.dart';
-import 'package:bromusic/model/box_model.dart';
+
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/menu_item/edit_playlist.dart';
-import 'package:bromusic/view/playlist/playlist.dart';
-import 'package:bromusic/view/playlist/playlist_songs.dart';
 
-import 'package:flutter/cupertino.dart';
+import 'package:bromusic/view/playlist/playlist_songs.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +15,6 @@ class PlaylistViewScreen extends StatelessWidget {
   const PlaylistViewScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    String? playlistTitle = '';
     var size = MediaQuery.of(context).size;
     var width = size.width;
     var height = size.height;
@@ -45,8 +41,6 @@ class PlaylistViewScreen extends StatelessWidget {
             builder: (PlaylistController playlistController) {
               return Container(
                 padding: const EdgeInsets.fromLTRB(15, 50, 15, 5),
-                // width: width,
-                // height: height,
                 decoration: boxDecorationImage(),
                 child: Column(
                   children: [
@@ -56,14 +50,6 @@ class PlaylistViewScreen extends StatelessWidget {
                       builder: ((context, boxes, _) {
                         playlistController.playlistName =
                             playlistController.box.keys.toList();
-                        // playlistController.playlistName[index] !=
-                        //             "music" &&
-                        //         playlistController.playlistName[index] !=
-                        //             "favourites" &&
-                        //         playlistController.playlistName[index] !=
-                        //             "identified" &&
-                        //         playlistController.playlistName[index] !=
-                        //             "recent"
 
                         return playlistController.playlistName.length == 4
                             ? Center(
@@ -88,13 +74,14 @@ class PlaylistViewScreen extends StatelessWidget {
                                       (element) => element == "recent");
                                   return GestureDetector(
                                       onTap: (() {
-                                        Navigator.of(context).push(
-                                            CupertinoPageRoute(
-                                                builder: (context) {
-                                          return PlaylistSongsView(
-                                              playlistName: playlistController
-                                                  .playlistName[index]);
-                                        }));
+                                        Get.to(
+                                            () => PlaylistSongsView(
+                                                playlistName: playlistController
+                                                    .playlistName[index]),
+                                            transition:
+                                                Transition.leftToRightWithFade,
+                                            duration: const Duration(
+                                                milliseconds: 300));
                                       }),
                                       child: Container(
                                           padding: const EdgeInsets.all(10),
@@ -105,7 +92,7 @@ class PlaylistViewScreen extends StatelessWidget {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   height: height * .10,
                                                   child: Image.asset(
                                                     "assets/images/tape.png",

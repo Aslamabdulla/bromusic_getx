@@ -1,20 +1,19 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/controller/playlist_controller.dart';
 
-import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
-import 'package:bromusic/view/playlist/playlist.dart';
+
 import 'package:bromusic/view/screens/mini_player/mini_player.dart';
 import 'package:bromusic/view/screens/player/player.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class PlaylistSongsView extends StatelessWidget {
-  PlaylistSongsView({Key? key, required this.playlistName}) : super(key: key);
+  const PlaylistSongsView({Key? key, required this.playlistName})
+      : super(key: key);
   final String playlistName;
 
   @override
@@ -110,7 +109,7 @@ class PlaylistSongsView extends StatelessWidget {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
-                                                  Container(
+                                                  SizedBox(
                                                     height: height * .10,
                                                     child: Image.asset(
                                                       "assets/images/tape.png",
@@ -177,7 +176,7 @@ class PlaylistSongsView extends StatelessWidget {
                                                                                 label: textHomeFunction("YES", 14)),
                                                                             TextButton.icon(
                                                                                 onPressed: () {
-                                                                                  Navigator.pop(context);
+                                                                                  Get.back();
                                                                                 },
                                                                                 icon: const Icon(
                                                                                   Icons.close,

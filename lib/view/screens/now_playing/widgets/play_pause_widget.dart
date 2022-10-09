@@ -1,5 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/main.dart';
+import 'package:bromusic/view/screens/now_playing/widgets/animated_widget.dart';
+import 'package:bromusic/view/screens/player/player.dart';
 import 'package:flutter/material.dart';
 
 class PlayPauseWidget extends StatelessWidget {
@@ -19,9 +21,9 @@ class PlayPauseWidget extends StatelessWidget {
         onPressed: () async {
           await player.playOrPause();
           if (nowplaying) {
-            // musicController.animationController.stop();
+            animationControllerImage.animationController.stop();
           } else {
-            // musicController.animationController.repeat();
+            animationControllerImage.animationController.repeat();
           }
         },
         icon: Icon(

@@ -17,23 +17,16 @@ class MusicController extends GetxController {
   List<SongModel> allSongs = <SongModel>[].obs;
   List playlistName = <dynamic>[].obs;
   List<dynamic>? favSongs = <dynamic>[].obs;
-
+  bool playing = false;
   double volume = 1;
 
   bool nextDone = true;
   bool prevDone = true;
-  List<SongModel> songs = [];
-  List<AllAudios>? dbSongs = [];
-  List<dynamic> favourites = [];
+
   bool isPlay = true;
   List? favouriteSongs = [];
-  ValueNotifier<bool> switched = ValueNotifier(false);
-  // late AnimationController animationController;
-  // final allSongs = RxList<SongModel>([]);
-  //  final fetchedSongs = RxList<SongModel>([]);
-  //  final dataBaseSongs = RxList<AllAudios>([]);
-  //  final mappedSongs = RxList<AllAudios>([]);
-  //  final fullSongs = RxList<Audio>([]);
+
+  int currentIndex = 1;
 
   @override
   void onInit() {
@@ -47,6 +40,11 @@ class MusicController extends GetxController {
   void dispose() {
     // animationController;
     super.dispose();
+  }
+
+  bottomNavigation(int newIndex) {
+    currentIndex = newIndex;
+    update();
   }
 
   final player = AssetsAudioPlayer.withId("0");
@@ -98,23 +96,6 @@ class MusicController extends GetxController {
     update();
   }
 
-  // addFavourite(AllAudios currentAudio) {
-  //   favSongs?.add(currentAudio);
-
-  //   box.put("favourites", favSongs!);
-
-  //   update();
-  // }
-
-  // removeFavourite(AllAudios currentAudio) {
-  //   favSongs!.removeWhere(
-  //       (element) => element.id.toString() == currentAudio.id.toString());
-
-  //   box.put("favourites", favSongs!);
-
-  //   update();
-  // }
-
   popupAddFav(AllAudios cache, List<dynamic> favouriteSongs) async {
     favouriteSongs.add(cache);
 
@@ -129,12 +110,6 @@ class MusicController extends GetxController {
     await box.put("favourites", favouriteSongs);
     update();
   }
-
-  // animationRotate() {
-  //   animationController =
-  //       AnimationController(vsync: , duration: const Duration(seconds: 7));
-  //   animationController.repeat();
-  // }
 
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
@@ -160,12 +135,4 @@ class MusicController extends GetxController {
     box.put('favourites', favSongs);
     update();
   }
-  // nowplayingButton(){
-  //    favSongs?.add(currentAudio);
-  //                                                   box.put("favourites",
-  //                                                       favSongs!);
-  //                                                   favSongs =
-  //                                                       box.get("favourites");
-  // }
-
 }

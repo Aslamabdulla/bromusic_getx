@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,8 @@ class MiniPlayerImageWidget extends StatelessWidget {
         width: width * .17,
         height: height * .08,
         child: QueryArtworkWidget(
+            artworkBlendMode: BlendMode.luminosity,
+            keepOldArtwork: true,
             artworkClipBehavior: Clip.none,
             artworkFit: BoxFit.cover,
             nullArtworkWidget: Container(

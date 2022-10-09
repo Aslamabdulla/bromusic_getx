@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/view/menu_item/recently_played.dart';
 import 'package:bromusic/view/screens/all_songs/widgets/list_tile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,7 @@ class AllSongs extends StatelessWidget {
   dynamic miniPlayer;
 
   String currentSongTitle = '';
-  int currentIndex = 1;
-  bool isPlayerViewVisible = true;
-  bool isTapped = false;
+
   final _audioQuery = OnAudioQuery();
 
   final AssetsAudioPlayer player = AssetsAudioPlayer.withId('0');
@@ -54,9 +53,7 @@ class AllSongs extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   Container(
-                    height: isTapped
-                        ? height
-                        : height, ///// want to change the container size
+                    height: height, ///// want to change the container size
                     width: width,
                     padding: EdgeInsets.only(bottom: height / 5.76),
 
@@ -101,30 +98,9 @@ class AllSongs extends StatelessWidget {
                                         .openAudioPlayer(
                                             index: index,
                                             audios: musicController.fullSongs);
-                                    currentIndex = index;
-                                    isTapped = true;
-                                    List existingSong = [];
-                                    existingSong = recentlyPlay!
-                                        .where((element) =>
-                                            element.id.toString() ==
-                                            cache.id.toString())
-                                        .toList();
-                                    if (existingSong.isEmpty) {
-                                      recentlyPlay.add(cache);
-                                      var temp = recentlyPlay.toSet().toList();
-                                      if (temp.length > 15) {
-                                        temp.removeAt(0);
-                                      }
 
-                                      await musicController.box
-                                          .put("recent", temp);
-                                    }
-
-                                    musicController.dataBaseSongs[index].count =
-                                        musicController
-                                                .dataBaseSongs[index].count! +
-                                            1;
-
+                                    recentController.addRecent(
+                                        recentlyPlay!, cache);
                                     showBottomSheet(
                                         backgroundColor: Colors.transparent,
                                         clipBehavior: Clip.hardEdge,
@@ -133,7 +109,11 @@ class AllSongs extends StatelessWidget {
                                             MiniPlayer(index: index));
                                   },
                                   onDoubleTap: () async {
-                                    await Get.to(() => NowPlayingScreen());
+                                    await Get.to(() => NowPlayingScreen(),
+                                        transition:
+                                            Transition.leftToRightWithFade,
+                                        duration:
+                                            const Duration(milliseconds: 300));
                                   },
                                   child: ValueListenableBuilder(
                                     valueListenable: switched,
@@ -161,16 +141,6 @@ class AllSongs extends StatelessWidget {
                 ],
               );
             }));
-  }
-
-  void playSong() {
-    {
-      if (isTapped) {
-        player.play();
-      } else {
-        player.pause();
-      }
-    }
   }
 
   AllAudios savedSongs(List<AllAudios> audios, String id) {
