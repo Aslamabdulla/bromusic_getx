@@ -1,16 +1,74 @@
-# bromusic
+<!--
+Hey, thanks for using the awesome-readme-template template.  
+If you have any enhancements, then fork this project and create a pull request 
+or just open an issue with the label "enhancement".
 
-A new Flutter project.
+Don't forget to give this project a star for additional support ;)
+Maybe you can mention me or this repo in the acknowledgements too
+-->
+<div align="center">
 
-## Getting Started
+  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
+  <h1>Bromusic Music Player With Song Identification</h1>
+  
+  <p>
+   A UNIQUE MUSIC PLAYER WITH SONG IDENTIFICATION
+  </p>
+  
+  
+<!-- Badges -->
 
-This project is a starting point for a Flutter application.
+ 
+</div>
 
-A few resources to get you started if this is your first Flutter project:
+<br />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<!-- Table of Contents -->
+# BROMUSIC FUNCTIONALITIES
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- ## PACKAGES USED
+  - Asset Audio Player
+  - Hive
+  - Shared Preference
+  - Animate Do
+  - Avatar Glow
+  - On Audio Query 
+  - Sleek Circular slider
+  - GetX
+  - ACR Cloud (#Song identification api)
+  - Share Plus
+  - Curved Navigation Bar
+  - Google Fonts
+  - Slide To Confirm
+  <!-- About the Project -->
+    
+ 
+  ## FUNCTIONALITIES
+  - Play/Pause
+  - Song Identification using API
+  - Most Played
+  - Favourites
+  - Playlist
+  - Mini Player
+  - Main Player
+  - Notication Control
+  - Multiple Themes
+  - Next/Previous
+  - Shuffle/Repeat
+  - Share App
+  - Bluetooth Autoplay
+ 
+
+  
+
+<!-- About the Project -->
+## :star2: About the Project
+
+
+<!-- Screenshots -->
+### :camera: Screenshots
+
+<div align="center"> 
+  <img src="assets/bromusic.png" alt="screenshot" />
+</div>
+
