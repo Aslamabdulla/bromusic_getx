@@ -69,6 +69,6 @@ Maybe you can mention me or this repo in the acknowledgements too
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="assets/bromusic.png" alt="screenshot" />
+  <img src="assets/bromusiclogo.jpg" alt="screenshot" />
 </div>
 
