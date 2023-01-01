@@ -1,8 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/controller/recent_controller.dart';
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 
-import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
@@ -11,10 +10,8 @@ import 'package:bromusic/view/screens/player/player.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
-RecentController recentController = Get.put(RecentController());
+import 'package:on_audio_query/on_audio_query.dart';
 
 class RecentScreen extends StatelessWidget {
   RecentScreen({Key? key}) : super(key: key);
@@ -29,7 +26,6 @@ class RecentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var width = size.width;
-    var height = size.height;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),

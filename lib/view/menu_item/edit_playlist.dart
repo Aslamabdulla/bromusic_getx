@@ -1,5 +1,6 @@
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
-import 'package:bromusic/view/playlist/playlist.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +29,7 @@ Future openEditDialog(BuildContext context, String playlistName) {
             }
             return null;
           },
-          decoration: InputDecoration(hintText: 'Playlist Name'),
+          decoration: const InputDecoration(hintText: 'Playlist Name'),
         ),
       ),
       actions: [
@@ -53,13 +54,13 @@ snakBar(BuildContext context, String dialogue, String temp) {
     content: Text(
       "$temp $dialogue",
       style: GoogleFonts.oswald(
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
           color: Color.fromARGB(255, 255, 255, 255),
           fontWeight: FontWeight.w600,
           fontSize: 12,
         ),
       ),
     ),
-    duration: Duration(seconds: 1),
+    duration: const Duration(seconds: 1),
   ));
 }

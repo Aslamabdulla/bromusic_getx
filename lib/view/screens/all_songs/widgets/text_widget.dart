@@ -1,4 +1,4 @@
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:flutter/material.dart';
 

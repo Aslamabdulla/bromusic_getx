@@ -2,30 +2,22 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/controller/favourite_controller.dart';
+
 import 'package:bromusic/view/favourites/widgets/app_bar_widget.dart';
 import 'package:bromusic/view/favourites/widgets/fav_list_widget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
-import 'package:bromusic/controller/controller.dart';
-import 'package:bromusic/main.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
-import 'package:bromusic/view/favourites/widgets/image_widget.dart';
-import 'package:bromusic/view/favourites/widgets/list_tile_items.dart';
-import 'package:bromusic/view/favourites/widgets/row_widget.dart';
-import 'package:bromusic/view/menu_item/pop_up.dart';
+
 import 'package:bromusic/view/screens/mini_player/mini_player.dart';
 import 'package:bromusic/view/screens/now_playing/now_playing.dart';
 import 'package:bromusic/view/screens/player/player.dart';
-import 'package:bromusic/view/search/search.dart';
 
-FavouriteController favouriteController = Get.put(FavouriteController());
 List<AllAudios>? dataBaseSongs = [];
 List<dynamic> favSongs = [];
 List<Audio> favAudios = [];

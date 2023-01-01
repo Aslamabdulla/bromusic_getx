@@ -1,16 +1,10 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:bromusic/controller/controller.dart';
-import 'package:bromusic/controller/favourite_controller.dart';
-
-import 'package:bromusic/main.dart';
-
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
-import 'package:bromusic/view/favourites/favourites.dart';
+
 import 'package:bromusic/view/playlist/playlist.dart';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,9 +14,6 @@ class PopupMenu extends StatelessWidget {
   PopupMenu({Key? key, required this.id}) : super(key: key);
 
   final box = SongBox.getInstance();
-
-  final FavouriteController favouriteController =
-      Get.put(FavouriteController());
 
   @override
   Widget build(BuildContext context) {

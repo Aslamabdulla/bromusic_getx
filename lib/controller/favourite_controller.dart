@@ -1,4 +1,3 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:get/get.dart';
 

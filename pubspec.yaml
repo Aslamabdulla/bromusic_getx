@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+4
+version: 1.0.0+5
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -28,7 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animate_do: ^2.1.0
-  assets_audio_player: ^3.0.5
+  assets_audio_player: ^3.0.6
   audio_video_progress_bar: ^0.10.0
   avatar_glow: ^2.0.2
   cupertino_icons: ^1.0.2
@@ -43,7 +43,6 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   lottie: ^1.4.2
-  marquee: ^2.2.3
   on_audio_query: ^2.6.1
   permission_handler: ^10.0.0
   share_plus: ^4.1.0
@@ -82,7 +81,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/music/
     #   - images/a_dot_ham.jpeg
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware

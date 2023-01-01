@@ -1,17 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/view/common_widgets/favorite_button.dart';
-import 'package:bromusic/view/screens/mini_player/widgets/add_favourites.dart';
-import 'package:bromusic/view/screens/mini_player/widgets/remove_favourite.dart';
-import 'package:bromusic/view/screens/player/player.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:bromusic/controller/controller.dart';
-import 'package:bromusic/main.dart';
+
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
@@ -43,8 +41,7 @@ class MiniPlayer extends StatelessWidget {
       musicController.favSongs = box.get("favourites");
       var audioFile =
           find(musicController.fullSongs, playing.audio.assetAudioPath);
-      var currentAudio = musicController.dataBaseSongs.firstWhere(
-          (element) => element.id.toString() == audioFile.metas.id.toString());
+
       return GestureDetector(
         onTap: () async {
           await Get.to(() => NowPlayingScreen(),
@@ -99,7 +96,7 @@ class MiniPlayer extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  IconSongController(width),
+                                  iconSongController(width),
                                   PlayerBuilder.isPlaying(
                                       player: player,
                                       builder: (context, nowplaying) {
@@ -123,25 +120,10 @@ class MiniPlayer extends StatelessWidget {
                                       size: width * .050,
                                     ),
                                   ),
-
                                   FavIconWidget(
                                       key: const Key("favBtn"),
                                       controller: musicController,
                                       songId: audioFile.metas.id.toString()),
-
-                                  // musicController.favSongs!
-                                  //         .where((element) =>
-                                  //             element.id.toString() ==
-                                  //             currentAudio.id.toString())
-                                  //         .isEmpty
-                                  //     ? AddToFavourites(
-                                  //         height: height,
-                                  //         width: width,
-                                  //         currentAudio: currentAudio)
-                                  //     : RemoveFromFavourite(
-                                  //         height: height,
-                                  //         width: width,
-                                  //         currentAudio: currentAudio),
                                   const SizedBox(
                                     width: 10,
                                   )
@@ -160,7 +142,7 @@ class MiniPlayer extends StatelessWidget {
     });
   }
 
-  IconButton IconSongController(
+  IconButton iconSongController(
     double width,
   ) {
     return IconButton(

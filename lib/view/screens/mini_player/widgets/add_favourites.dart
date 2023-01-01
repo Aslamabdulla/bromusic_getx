@@ -1,7 +1,8 @@
 import 'package:bromusic/controller/controller.dart';
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
+
 import 'package:bromusic/model/box_model.dart';
-import 'package:bromusic/view/favourites/favourites.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

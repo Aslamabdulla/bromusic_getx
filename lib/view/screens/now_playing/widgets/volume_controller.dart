@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 

@@ -4,8 +4,6 @@ import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:bromusic/view/menu_item/recently_played.dart';
 import 'package:bromusic/view/search/search.dart';
 
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,9 +18,6 @@ class TopBeatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    var width = size.width;
-    var height = size.height;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -35,7 +30,7 @@ class TopBeatsScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 15.0),
                 child: IconButton(
                   onPressed: () {
-                    Get.to(() => SearchScreen());
+                    Get.to(() => const SearchScreen());
                   },
                   icon: const Icon(
                     Icons.search,
@@ -55,8 +50,6 @@ class TopBeatsScreen extends StatelessWidget {
         ),
         body: Container(
             padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-            // width: width,
-            // height: height,
             decoration: boxDecorationImage(),
             child: RecentScreen()),
       ),

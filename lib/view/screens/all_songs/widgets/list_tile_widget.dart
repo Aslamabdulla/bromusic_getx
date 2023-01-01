@@ -1,8 +1,8 @@
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/common.dart';
 import 'package:bromusic/view/menu_item/pop_up.dart';
-import 'package:bromusic/view/screens/all_songs/all_songs.dart';
+
 import 'package:bromusic/view/screens/all_songs/widgets/text_widget.dart';
 import 'package:bromusic/view/screens/all_songs/widgets/image_widget.dart';
 import 'package:flutter/material.dart';

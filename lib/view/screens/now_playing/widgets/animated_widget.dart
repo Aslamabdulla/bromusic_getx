@@ -1,8 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:bromusic/controller/animation_controller.dart';
-import 'package:bromusic/main.dart';
-import 'package:bromusic/view/screens/mini_player/mini_player.dart';
-import 'package:bromusic/view/screens/player/player.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

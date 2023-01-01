@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 commonYellow() {
   return const Color.fromRGBO(255, 201, 0, 1);

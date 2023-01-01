@@ -1,15 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 import 'package:bromusic/controller/controller.dart';
-import 'package:bromusic/main.dart';
+
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
-import 'package:bromusic/view/menu_item/playlist-dialog.dart';
+
 import 'package:bromusic/view/screens/all_songs/all_songs.dart';
 import 'package:bromusic/view/screens/find_music/find_music.dart';
 import 'package:bromusic/view/screens/home_page/home_page.dart';
@@ -61,7 +60,7 @@ class NavigationRouting extends StatelessWidget {
                             duration: const Duration(milliseconds: 300));
                       },
                       icon: const Icon(
-                        Icons.settings_input_antenna,
+                        Icons.music_note,
                         size: 25,
                       )),
                   IconButton(

@@ -59,6 +59,7 @@ class NameScreenWidget extends StatelessWidget {
             Get.offAll(() => NavigationRouting(user: username),
                 transition: Transition.rightToLeft,
                 duration: const Duration(microseconds: 300));
+            textController.dispose();
           },
           backgroundColorEnd: commonLightYellow(),
         ),

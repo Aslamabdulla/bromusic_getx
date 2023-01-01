@@ -1,30 +1,26 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
-import 'package:avatar_glow/avatar_glow.dart';
+
 import 'package:bromusic/controller/controller.dart';
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/common_widgets/settings.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
-import 'package:bromusic/view/screens/mini_player/mini_player.dart';
-import 'package:bromusic/view/screens/now_playing/widgets/animated_widget.dart';
+
 import 'package:bromusic/view/screens/now_playing/widgets/decor_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/fav_button.dart';
-import 'package:bromusic/view/screens/now_playing/widgets/head_title_widget.dart';
+
 import 'package:bromusic/view/screens/now_playing/widgets/icon_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/loop_button.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/play_pause_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/positioned_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/progress_bar_widget.dart';
 import 'package:bromusic/view/screens/now_playing/widgets/shuffle_button.dart';
-import 'package:bromusic/view/screens/now_playing/widgets/volume_controller.dart';
+
 import 'package:bromusic/view/screens/now_playing/widgets/volume_widget.dart';
-import 'package:bromusic/view/screens/player/player.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

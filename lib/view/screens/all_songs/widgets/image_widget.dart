@@ -1,4 +1,4 @@
-import 'package:bromusic/main.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';

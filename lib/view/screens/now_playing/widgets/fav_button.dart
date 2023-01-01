@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bromusic/controller/favourite_controller.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/model/box_model.dart';
-import 'package:bromusic/view/common_widgets/favorite_button.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

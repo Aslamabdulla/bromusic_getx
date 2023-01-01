@@ -2,8 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:bromusic/controller/now_playing_controller.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 
 class LoopButttonWidget extends StatelessWidget {

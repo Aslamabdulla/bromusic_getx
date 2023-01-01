@@ -1,13 +1,10 @@
-import 'package:bromusic/controller/favourite_controller.dart';
-import 'package:bromusic/controller/playlist_controller.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
 import 'package:bromusic/view/decoration/box_decoration.dart';
-import 'package:bromusic/view/menu_item/playlist-dialog.dart';
+import 'package:bromusic/view/menu_item/playlist_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-PlaylistController playlistController = Get.put(PlaylistController());
 
 class PlaylistScreen extends StatefulWidget {
   final AllAudios song;

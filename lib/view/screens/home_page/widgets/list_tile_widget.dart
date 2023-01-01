@@ -1,10 +1,7 @@
-import 'package:bromusic/controller/favourite_controller.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
-import 'package:bromusic/view/favourites/favourites.dart';
-import 'package:bromusic/view/screens/onboarding/home_list.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ListTileWidget extends StatelessWidget {
   String image;

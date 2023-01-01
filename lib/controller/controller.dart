@@ -1,7 +1,9 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/controller/animation_controller.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
+
 import 'package:bromusic/model/box_model.dart';
-import 'package:bromusic/view/screens/now_playing/now_playing.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 import 'package:on_audio_query/on_audio_query.dart';
@@ -38,7 +40,12 @@ class MusicController extends GetxController {
 
   @override
   void dispose() {
-    // animationController;
+    musicController.dispose();
+    favouriteController.dispose();
+    nowPlayingController.dispose();
+    playlistController.dispose();
+    recentController.dispose();
+    AnimationControllerImage().animationController.dispose();
     super.dispose();
   }
 
@@ -134,5 +141,24 @@ class MusicController extends GetxController {
         (element) => element.id.toString() == audios.id.toString());
     box.put('favourites', favSongs);
     update();
+  }
+
+  initApplication() async {
+    final box = SongBox.getInstance();
+    List<dynamic> favBoxKeys = box.keys.toList();
+    if (!favBoxKeys.contains("favourites")) {
+      List<dynamic> favSongs = [];
+      await box.put("favourites", favSongs);
+    }
+    List<dynamic> findSongKeys = box.keys.toList();
+    if (!findSongKeys.contains("identified")) {
+      List<dynamic> identifiedSong = [];
+      await box.put("identified", identifiedSong);
+    }
+    List<dynamic> recentSongKeys = box.keys.toList();
+    if (!recentSongKeys.contains("recent")) {
+      List<dynamic> recentSongs = [];
+      await box.put("recent", recentSongs);
+    }
   }
 }

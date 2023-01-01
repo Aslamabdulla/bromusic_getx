@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:bromusic/dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bromusic/controller/favourite_controller.dart';
@@ -7,8 +8,6 @@ import 'package:bromusic/controller/controller.dart';
 import 'package:bromusic/main.dart';
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
-
-FavouriteController favouriteController = Get.put(FavouriteController());
 
 class FavIconWidget extends StatelessWidget {
   MusicController controller;

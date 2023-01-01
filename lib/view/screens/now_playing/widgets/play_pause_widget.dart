@@ -1,7 +1,7 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:bromusic/main.dart';
+
 import 'package:bromusic/view/screens/now_playing/widgets/animated_widget.dart';
-import 'package:bromusic/view/screens/player/player.dart';
+
 import 'package:flutter/material.dart';
 
 class PlayPauseWidget extends StatelessWidget {

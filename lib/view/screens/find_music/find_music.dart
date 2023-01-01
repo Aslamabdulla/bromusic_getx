@@ -1,14 +1,16 @@
-import 'package:animate_do/animate_do.dart';
-
 import 'package:bromusic/model/box_model.dart';
 import 'package:bromusic/view/common_widgets/colors.dart';
-import 'package:bromusic/view/menu_item/playlist-dialog.dart';
+
 import 'package:bromusic/view/screens/find_music/env.dart';
+import 'package:bromusic/view/screens/find_music/widgets/tap_to_identify_text_widget.dart';
+import 'package:bromusic/view/screens/find_music/widgets/tap_to_identify_widget_with_image.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_acrcloud/flutter_acrcloud.dart';
+import 'package:get/get.dart';
 
-import 'package:hive_flutter/hive_flutter.dart';
+import 'widgets/identified_songs_widget.dart';
 
 class FindMusic extends StatefulWidget {
   const FindMusic({Key? key}) : super(key: key);
@@ -61,7 +63,7 @@ class _FindMusicState extends State<FindMusic> {
   Widget build(BuildContext context) {
     List identifyMusic = [];
     var size = MediaQuery.of(context).size;
-    var height = size.height;
+
     var width = size.width;
 
     return Column(
@@ -85,122 +87,75 @@ class _FindMusicState extends State<FindMusic> {
                         InkWell(
                           hoverColor: Colors.red,
                           onTap: () async {
-                            setState(() {
-                              music = null;
-                            });
-                            final session = ACRCloud.startSession();
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (context) => AlertDialog(
-                                title: Center(
-                                    child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    textFindFunction("IDENTIFYING", 18),
-                                    textButtonFunction(
-                                        " MUSIC", 18, commonYellow()),
+                            try {
+                              setState(() {
+                                music = null;
+                              });
+                              final session = ACRCloud.startSession();
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => AlertDialog(
+                                  title: Center(
+                                      child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      textFindFunction("IDENTIFYING", 18),
+                                      textButtonFunction(
+                                          " MUSIC", 18, commonYellow()),
+                                    ],
+                                  )),
+                                  content: Image.asset(
+                                    "assets/images/find.gif",
+                                    height: 80,
+                                    width: 50,
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: textButtonFunction(
+                                          "CANCEL", 14, commonRed()),
+                                      onPressed: () {
+                                        session.cancel();
+                                      },
+                                    )
                                   ],
-                                )),
-                                content: Image.asset(
-                                  "assets/images/find.gif",
-                                  height: 80,
-                                  width: 50,
                                 ),
-                                actions: [
-                                  TextButton(
-                                    child: textButtonFunction(
-                                        "CANCEL", 14, commonRed()),
-                                    onPressed: session.cancel,
-                                  )
-                                ],
-                              ),
-                            );
-                            final result = await session.result;
-                            Navigator.pop(context);
+                              );
+                              final result = await session.result;
+                              Get.close(1);
 
-                            if (result == null) {
-                              session.cancel();
-                              // Cancelled.
-                              return;
-                            } else if (result.metadata == null) {
-                              snakBar(context, "NO RESULT", "");
-                              session.cancel();
-                              return;
-                            }
+                              if (result == null) {
+                                session.cancel();
+                                // Cancelled.
+                                return;
+                              } else if (result.metadata == null) {
+                                Get.snackbar("Error", "No Song Found");
+                                session.cancel();
+                                return;
+                              }
 
-                            setState(() {
-                              music = result.metadata!.music.first;
-                            });
+                              setState(() {
+                                music = result.metadata!.music.first;
+                              });
 
-                            if (result != null) {
-                              snakBar(context, "SONG IDENTIFIED", "");
-                              getAudio.add(music!);
-                              await saveSong();
+                              if (result != null) {
+                                Get.snackbar("Success", "Song Identified");
+                                getAudio.add(music!);
+                                await saveSong();
 
-                              // identifiedSongs!.insert(0, music!);
+                                // identifiedSongs!.insert(0, music!);
 
-                              // await box.put("identified", identifiedSongs!);
-                              snakBar(context, music!.artists.first.name,
-                                  music!.title);
+                                // await box.put("identified", identifiedSongs!);
+                                Get.snackbar(
+                                    music!.artists.first.name, music!.title,
+                                    colorText: Colors.black,
+                                    backgroundColor: Colors.white);
+                              }
+                            } on PlatformException catch (e) {
+                              music = null;
                             }
                           },
-                          child: Container(
-                            height: 350.06,
-                            width: 364.06,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  image: AssetImage(
-                                    "assets/images/back1.png",
-                                  ),
-                                  fit: BoxFit.contain),
-                              // color: Color.fromRGBO(195, 222, 248, 1),
-                              border: Border.all(
-                                  color:
-                                      const Color.fromRGBO(188, 210, 226, .5),
-                                  width: 2.0,
-                                  style: BorderStyle.solid),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromRGBO(255, 255, 255, .9),
-                                  blurRadius: 14,
-                                  spreadRadius: 14,
-                                  offset: Offset(0, 0),
-                                ),
-                              ],
-
-                              shape: BoxShape.circle,
-
-                              // borderRadius: BorderRadius.all(Radius.circular(100)),
-                            ),
-                            child: SpinPerfect(
-                              duration: const Duration(milliseconds: 3000),
-                              infinite: true,
-                              child: Center(
-                                child: Container(
-                                  margin: const EdgeInsets.all(50),
-                                  decoration: const BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color.fromRGBO(0, 0, 0, .4),
-                                        blurRadius: 0,
-                                        spreadRadius: 0,
-                                        offset: Offset(0, 0.0),
-                                      ),
-                                    ],
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                          "assets/images/4.png",
-                                        ),
-                                        fit: BoxFit.contain),
-                                    shape: BoxShape.circle,
-
-                                    // borderRadius: BorderRadius.all(Radius.circular(100)),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          child: taptoIdentifyWidgetWithImage(),
                         ),
                       ],
                     ),
@@ -208,42 +163,7 @@ class _FindMusicState extends State<FindMusic> {
                 }),
               ],
             )),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0, bottom: 0),
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (music != null) ...[
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 50,
-                          child: textFindFunction(music!.title, 24),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 50,
-                          child:
-                              textFindFunction(music!.artists.first.name, 15),
-                        )
-                      ] else ...[
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 50,
-                          child: textFindFunction("TAP TO IDENTIFY SONGS", 24),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 50,
-                          child: textFindFunction("FIND MUSIC V2.0", 15),
-                        )
-                      ]
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+        taptoIdentifyTextFiedWidget(context, music),
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Row(
@@ -258,117 +178,8 @@ class _FindMusicState extends State<FindMusic> {
         ),
         Expanded(
             flex: 4,
-            child: ValueListenableBuilder(
-              valueListenable: box.listenable(),
-              builder: ((context, boxes, _) {
-                identifyMusic = box.keys.toList();
-                return Container(
-                  padding: const EdgeInsets.only(bottom: 75, left: 10),
-                  child: ListView.separated(
-                      shrinkWrap: false,
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Stack(
-                          children: [
-                            SlideInRight(
-                              duration: const Duration(milliseconds: 800),
-                              child: GestureDetector(
-                                  child: identifiedSongs![index] != "music" &&
-                                          identifiedSongs![index] !=
-                                              "favourites" &&
-                                          identifiedSongs![index] !=
-                                              "identified" &&
-                                          identifiedSongs![index] != "recent"
-                                      ? Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 10),
-                                          height: 160,
-                                          width: 120,
-                                          decoration: BoxDecoration(
-                                              color: const Color.fromRGBO(
-                                                  200, 228, 241, 1),
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color.fromRGBO(
-                                                      200, 228, 241, 1),
-                                                  blurRadius: 1,
-                                                  spreadRadius: 1,
-                                                  offset: Offset(0, 0),
-                                                ),
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 8),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                  decoration: const BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                              "assets/images/tapeedit.png"),
-                                                          fit: BoxFit.cover),
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  20)),
-                                                      color: Color.fromRGBO(
-                                                          255, 255, 255, .75)),
-                                                  height: 100,
-                                                  width: 90,
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    Container(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8),
-                                                      width: 120,
-                                                      child: textHomeFunction(
-                                                          identifiedSongs![
-                                                                  index]
-                                                              .title,
-                                                          12),
-                                                    ),
-                                                    Container(
-                                                      padding: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8),
-                                                      width: 120,
-                                                      child:
-                                                          textHomeSubFunction(
-                                                              identifiedSongs![
-                                                                      index]
-                                                                  .artist,
-                                                              10),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5,
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      : Container()),
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          width: 20,
-                        );
-                      },
-                      itemCount: identifiedSongs!.length),
-                );
-              }),
-            )),
+            child: identifiedSongsWidget(
+                identifyMusic, identifiedSongs ?? [], box)),
       ],
     );
   }

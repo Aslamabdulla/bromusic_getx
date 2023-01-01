@@ -12,6 +12,6 @@ class RoutesClass {
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => SplashScreen()),
-    GetPage(name: home, page: () => Homepage(name: 'GUEST')),
+    GetPage(name: home, page: () => const Homepage(name: 'GUEST')),
   ];
 }
