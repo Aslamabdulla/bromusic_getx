@@ -1,4 +1,4 @@
-package com.example.bromusic
+package com.bytehub.bromusic
 
 import io.flutter.embedding.android.FlutterActivity
 

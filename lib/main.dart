@@ -28,7 +28,6 @@ Future<void> main() async {
   Hive.registerAdapter(AllAudiosAdapter());
   await Hive.openBox<AllAudios>('allsongs');
   await Hive.openBox<List>(boxName);
-  await musicController.initApplication();
 
   WidgetsFlutterBinding.ensureInitialized();
   preference = await SharedPreferences.getInstance();
@@ -38,7 +37,7 @@ Future<void> main() async {
   } else {
     switched.value = temp!;
   }
-  musicController.songFetch();
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MyApp());
@@ -51,10 +50,6 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
   final box = SongBox.getInstance();
   final player = AssetsAudioPlayer.withId("0");
-
-  void requestPermission() {
-    Permission.storage.request();
-  }
 
   @override
   Widget build(BuildContext context) {

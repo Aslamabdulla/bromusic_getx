@@ -5,6 +5,7 @@ import 'package:bromusic/view/screens/bottom_nav/routing.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
 
 class NameScreenWidget extends StatelessWidget {
@@ -55,6 +56,9 @@ class NameScreenWidget extends StatelessWidget {
             }
 
             onSwipeButton();
+
+            Permission.storage.request();
+
             // firsttime = false;
             Get.offAll(() => NavigationRouting(user: username),
                 transition: Transition.rightToLeft,

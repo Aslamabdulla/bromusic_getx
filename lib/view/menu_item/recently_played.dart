@@ -35,7 +35,8 @@ class RecentScreen extends StatelessWidget {
       child: GetBuilder<RecentController>(
           init: RecentController(),
           builder: (RecentController recentController) {
-            List<dynamic> playlistAudios = musicController.box.get("recent")!;
+            List<dynamic> playlistAudios =
+                musicController.box.get("recent") ?? [];
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -58,13 +59,15 @@ class RecentScreen extends StatelessWidget {
                                 return GestureDetector(
                                     onTap: () async {
                                       for (var element in playlistAudios) {
-                                        playlistPlay
-                                            .add(Audio.file(element.path!,
-                                                metas: Metas(
-                                                  title: element.title,
-                                                  id: element.id.toString(),
-                                                  artist: element.artist,
-                                                )));
+                                        if (element.path != null) {
+                                          playlistPlay
+                                              .add(Audio.file(element.path!,
+                                                  metas: Metas(
+                                                    title: element.title,
+                                                    id: element.id.toString(),
+                                                    artist: element.artist,
+                                                  )));
+                                        }
                                       }
                                       await CurrentlyPlaying(
                                               fullSongs: playlistPlay,
